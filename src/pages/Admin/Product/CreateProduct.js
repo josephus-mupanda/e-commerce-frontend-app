@@ -147,7 +147,7 @@ const CreateProduct = () => {
           image: image
         };
 
-        await axios.post(`${BASE_URL}/api/admin/products/create`, formData);
+        await axios.post(`${BASE_URL}/api/admin/products`, formData);
         
         //setSuccessMsg(`Product "${name}" created successfully.`);
         toast.success(`Product "${name}" created successfully.`);

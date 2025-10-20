@@ -247,89 +247,7 @@ const CustomTable = ({ data , onDelete }) => {
         ))}
       </div>
     </div>
-      {/* <table className="min-w-full divide-y divide-gray-200">
-      <thead>
-        <tr>
-          <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          ID
-          </th>
-          <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Name
-          </th>
-          <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Description
-          </th>
-          <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Price
-          </th>
-          <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Quantity
-          </th>
-          <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Image
-          </th>
-          <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Category
-          </th>
-          <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
-        {data.map((product) => (
-          <tr key={product.id} className="text-sm text-gray-800">
-            <td className="py-2 px-4 whitespace-nowrap">
-              <div className="text-sm text-gray-900">{product.id}</div>
-            </td>
-            <td className="py-2 px-4 whitespace-nowrap">
-              <div className="text-sm text-gray-900">{product.name}</div>
-            </td>
-            <td className="py-2 px-4 ">
-              <div className="text-sm text-gray-900">{product.description}</div>
-            </td>
-            <td className="py-2 px-4">
-              <div className="text-sm text-gray-900">{product.price}RWF</div>
-            </td>
-            <td className="py-2 px-4 whitespace-nowrap">
-              <div className="text-sm text-gray-900">{product.quantity}</div>
-            </td>
-            <td className="py-2 px-4 whitespace-nowrap">
-              <img
-                  src={`data:image/jpeg;base64,${product.image}`}
-                alt={product.name}
-                className="w-16 h-16 object-cover"
-              />
-            </td>
-            <td className="py-2 px-4 whitespace-nowrap">
-              <div className="text-sm text-gray-900">{product.category.name}</div>
-            </td>
-            <td className="py-2 px-4">
-
-              <Link to={`/admin/update-product/${product.id}`}>
-                <button className="w-20 h-8 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-md mr-2">
-                  Edit
-                </button>
-              </Link>
-              
-              <button
-                  onClick={() => handleViewDetails(product)}
-                  className="w-20 h-8 bg-green-100 hover:bg-green-200 text-green-800 rounded-md mr-2"
-                >
-                  View
-              </button>
-
-              <button
-               onClick={() => handleDelete(product.id)} 
-               className="w-20 h-8 bg-red-100 hover:bg-red-200 text-red-800 rounded-md mr-2"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table> */}
+      
     </div>
   );
 };
@@ -360,7 +278,7 @@ const ProductManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}/api/admin/products/delete/${id}`);
+      await axios.delete(`${BASE_URL}/api/admin/products/${id}`);
       setProducts(products.filter((product) => product.id !== id));
       setFilteredProducts(filteredProducts.filter((product) => product.id !== id));
     } catch (error) {

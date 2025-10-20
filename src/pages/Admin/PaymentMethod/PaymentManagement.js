@@ -184,55 +184,6 @@ const CustomTable = ({ data , onDelete }) => {
         ))}
       </div>
     </div>
-      {/* <table  className="min-w-full divide-y divide-gray-200">
-        <thead>
-          <tr>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            ID
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Method  Name
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {data.map((payment) => (
-            <tr key={payment.id} className="text-sm text-gray-800">
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{payment.id}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{payment.paymentMethod}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <Link to={`/admin/update-payment/${payment.id}`}>
-                  <button className="w-20 h-8 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-md mr-2">
-                    Edit
-                  </button>
-                </Link>
-
-                <button
-                  onClick={() => handleViewDetails(payment)}
-                  className="w-20 h-8 bg-green-100 hover:bg-green-200 text-green-800 rounded-md mr-2"
-                >
-                  View
-                </button>
-
-                <button
-                  onClick={() => handleDelete(payment.id)}
-                  className="w-20 h-8 bg-red-100 hover:bg-red-200 text-red-800 rounded-md mr-2"
-                >
-                  Delete
-                </button>
-                
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
     </div>  
   );
 };
@@ -265,7 +216,7 @@ const PaymentManagement = () => {
   const handleDelete = async (id) => {
     try {
       // Send delete request to backend API
-      await axios.delete(`${BASE_URL}/api/admin/payments/delete/${id}`);
+      await axios.delete(`${BASE_URL}/api/admin/payments/${id}`);
       // Remove the deleted payment from the state
       setPayments(payments.filter((payment) => payment.id !== id));
       setFilteredPayments(filteredPayments.filter((payment) => payment.id !== id));

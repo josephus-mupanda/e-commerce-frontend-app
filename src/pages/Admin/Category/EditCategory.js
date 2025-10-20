@@ -15,7 +15,6 @@ const EditCategory = () => {
   const [description, setDescription] = useState("");
   const [errName, setErrName] = useState("");
   const [errDescription, setErrDescription] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
   const navigate = useNavigate();
 
  // Fetch category details based on ID when component mounts
@@ -75,7 +74,7 @@ const EditCategory = () => {
           description: description
         };
   
-        const response = await axios.put(`${BASE_URL}/api/admin/categories/update/${id}`, formData);
+        const response = await axios.put(`${BASE_URL}/api/admin/categories/${id}`, formData);
         const data = response.data;
   
         // Store category ID in session storage

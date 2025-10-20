@@ -5,7 +5,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
-const REGISTER_ENDPOINT = "/api/users/register";
+
+const REGISTER_ENDPOINT = "/api/auth/register";
 
 const SignUp = () => {
 

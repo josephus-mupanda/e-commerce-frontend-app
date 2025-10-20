@@ -18,7 +18,7 @@ const ConfirmationPage = () => {
     const confirmUserEmail = async () => {
       try {
         const response = await axios.get(
-          `${BASE_URL}/api/users/confirm?token=${token}`
+          `${BASE_URL}/api/auth/confirm?token=${token}`
         );
 
         if (response.data.message === "Email confirmed successfully") {

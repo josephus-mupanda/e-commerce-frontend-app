@@ -392,135 +392,7 @@ const CustomTable = ({ data, onDelete, onDispatch, onCancel, onComplete }) => {
         ))}
       </div>
     </div>
-      {/* <table className="min-w-full divide-y divide-gray-200">
-        <thead>
-          <tr>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Tracking ID
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              User
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Address
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            City
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Amount
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Date
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Payment
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Status
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {data.map((order) => (
-            <tr key={order.id} className="text-sm text-gray-800">
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{order.trackingId}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{order.user.username}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{order.address}</div>
-                </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{order.city}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{order.totalAmount} Rwf</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{new Date(order.orderDate).toLocaleString()}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{order.paymentMethod.paymentMethod}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <span
-                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    order.status === "PENDING"
-                      ? "bg-yellow-100  text-yellow-800"
-                      : order.status === "DISPATCHED"
-                      ? "bg-green-100  text-green-800"
-                      :  order.status === "CANCELED"
-                      ? "bg-red-100  text-red-800"
-                      : "bg-blue-100  text-blue-800"
-                  }`}
-                >
-                  {order.status}
-                </span>
-                
-                </td>
-              <td className="px-2 py-4 text-sm font-medium">
-                <button
-                  onClick={() => openDetailsAlert(order)}
-                  className="w-20 h-8 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-md mr-2 "
-                >
-                  <BsEye className="text-xl inline-block" />
-                </button>
-
-                {order.status === "PENDING" && (
-                  <button
-                    onClick={() => onDispatch(order.id)}
-                    className="w-20 h-8 bg-green-100 hover:bg-green-200 text-green-800 rounded-md mr-2"
-                  >
-                    <FaTruck className="text-xl inline-block" />
-                  </button>
-                )}
-
-                {order.status === "DISPATCHED" && (
-                  <button
-                    onClick={() => onComplete(order.id)}
-                    className="w-20 h-8 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 rounded-md mr-2"
-                  >
-                    <FaShippingFast className="text-xl inline-block" />
-                  </button>
-                )}
-
-                {order.status === "CANCELED" && (
-                  <button
-                    onClick={() => onDispatch(order.id)}
-                    className="w-20 h-8 bg-green-100 hover:bg-green-200 text-green-800 rounded-md mr-20"
-                  >
-                   <FaTruck className="text-xl inline-block" />
-                  </button>
-                )}
-
-                {order.status === "COMPLETED" && (
-                  <button
-                    onClick={() => handleDelete(order.id)}
-                    className="w-20 h-8 bg-red-100 hover:bg-red-200 text-red-800 rounded-md mr-2"
-                  >
-                    <RiDeleteBin6Line  className="text-xl inline-block" />
-                  </button>
-                )}
-
-                {order.status !== "COMPLETED" && order.status !== "CANCELED" && (
-                  <button
-                    onClick={() => handleCancel(order.id)}
-                    className="w-20 h-8 bg-red-100 hover:bg-red-200 text-red-800 rounded-md mr-2"
-                  >
-                    <BsX className="text-xl inline-block" />
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+  
     </div>
   );
 };
@@ -552,7 +424,7 @@ const OrderManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}/api/admin/orders/delete/${id}`);
+      await axios.delete(`${BASE_URL}/api/admin/orders/${id}`);
       setOrders(orders.filter((order) => order.id !== id));
       setFilteredorders(filteredorders.filter((order) => order.id !== id));
     } catch (error) {
@@ -597,7 +469,7 @@ const OrderManagement = () => {
     try {
       // Call API to update order status to "DISPATCHED"
       let updatedStatus = "DISPATCHED";
-      const response = await axios.put(`${BASE_URL}/api/admin/orders/update/${id}`, 
+      const response = await axios.put(`${BASE_URL}/api/admin/orders/${id}`, 
         { 
           status: updatedStatus
         }
@@ -620,7 +492,7 @@ const OrderManagement = () => {
     try {
       // Call API to update order status to "CANCELED"
       let updatedStatus = "CANCELED";
-      const response =  await axios.put(`${BASE_URL}/api/admin/orders/update/${id}`,
+      const response =  await axios.put(`${BASE_URL}/api/admin/orders/${id}`,
         {
           status: updatedStatus 
         }
@@ -643,7 +515,7 @@ const OrderManagement = () => {
     try {
       // Call API to update order status to "COMPLETED"
       let updatedStatus = "COMPLETED";
-      const response = await axios.put(`${BASE_URL}/api/admin/orders/update/${id}`,
+      const response = await axios.put(`${BASE_URL}/api/admin/orders/${id}`,
         { 
           status: updatedStatus 
         }

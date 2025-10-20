@@ -33,7 +33,7 @@ const CreatePaymentMethod = () => {
         paymentMethod: name
       };
 
-      const response = await axios.post(`${BASE_URL}/api/admin/payments/create`, formData);
+      const response = await axios.post(`${BASE_URL}/api/admin/payments`, formData);
       const data = response.data;
 
       // Display success message

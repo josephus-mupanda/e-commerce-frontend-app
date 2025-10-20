@@ -170,59 +170,7 @@ const CustomTable = ({ data, onDelete }) => {
         ))}
       </div>
     </div>
-      {/* <table className="min-w-full divide-y divide-gray-200">
-        <thead>
-          <tr>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            ID
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Username
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Email
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Role
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody  className="bg-white divide-y divide-gray-200">
-          {data.map((user) => (
-            <tr key={user.id} className="text-sm text-gray-800">
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{user.id}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{user.username}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{user.email}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{user.role}</div>
-              </td>
-              <td className="px-6 py-4 text-sm font-medium">
-                <button
-                  onClick={() => handleViewDetails(user)}
-                  className="w-20 h-8 bg-green-100 hover:bg-green-200 text-green-800 rounded-md mr-2"
-                >
-                  View
-                </button>
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="w-20 h-8 bg-red-100 hover:bg-red-200 text-red-800 rounded-md mr-2"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+      
     </div>
   );
 };

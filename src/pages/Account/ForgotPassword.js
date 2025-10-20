@@ -6,7 +6,7 @@ import { BASE_URL } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
 import Header from "../../components/home/Header/Header";
 
-const FORGOT_PASSWORD_ENDPOINT = "/api/users/forgot-password";
+const FORGOT_PASSWORD_ENDPOINT = "/api/auth/forgot-password";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

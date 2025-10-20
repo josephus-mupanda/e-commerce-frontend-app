@@ -12,7 +12,6 @@ const CreateCategory = () => {
   const [description, setDescription] = useState("");
   const [errName, setErrName] = useState("");
   const [errDescription, setErrDescription] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
   const navigate = useNavigate();
 
   const handleName = (e) => {
@@ -46,7 +45,7 @@ const CreateCategory = () => {
           description: description
         };
   
-        const response = await axios.post(`${BASE_URL}/api/admin/categories/create`, formData);
+        const response = await axios.post(`${BASE_URL}/api/admin/categories`, formData);
         const data = response.data;
   
         // Store category ID and user details in session storage

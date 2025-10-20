@@ -197,63 +197,7 @@ const CustomTable = ({ data , onDelete }) => {
           ))}
         </div>
       </div>
-      {/* <table className="min-w-full divide-y divide-gray-200">
-        <thead>
-          <tr>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            ID
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Name
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Description
-            </th>
-            <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {data.map((category) => (
-            <tr key={category.id} className="text-sm text-gray-800">
-               <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{category.id}</div>
-              </td>
-              <td className="py-2 px-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">{category.name}</div>
-              </td>
-              <td className="py-2 px-4 ">
-                <div className="text-sm text-gray-900">{category.description}</div>
-              </td>
-              <td className="px-6 py-4  text-sm font-medium">
-
-                <Link to={`/admin/update-category/${category.id}`}>
-                  <button 
-                  className="w-20 h-8 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-md mr-2">
-                    Edit
-                  </button>
-                </Link>
-
-                <button
-                  onClick={() => handleViewDetails(category)}
-                  className="w-20 h-8 bg-green-100 hover:bg-green-200 text-green-800 rounded-md mr-2"
-                >
-                  View
-                </button>
-
-                <button
-                  onClick={() => handleDelete(category.id)}
-                  className="w-20 h-8 bg-red-100 hover:bg-red-200 text-red-800 rounded-md mr-2"
-                >
-                  Delete
-                </button>
-                
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
+    
     </div>  
   );
 };
@@ -283,7 +227,7 @@ const CategoryManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${BASE_URL}/api/admin/categories/delete/${id}`);
+      await axios.delete(`${BASE_URL}/api/admin/categories/${id}`);
       setCategories(categories.filter((category) => category.id !== id));
       setFilteredCategories(filteredCategories.filter((category) => category.id !== id));
     } catch (error) {

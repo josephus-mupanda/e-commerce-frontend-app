@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL,ADMIN_ROLE,CUSTOMER_ROLE } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
-const LOGIN_ENDPOINT = "/api/users/login";
+const LOGIN_ENDPOINT = "/api/auth/login";
 
 const SignIn = () => {
   // ============= Initial State Start here =============

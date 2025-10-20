@@ -122,21 +122,6 @@ const EditProduct = () => {
     }
   };
 
-  // const handleImageUpload = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       const imageData = reader.result;
-  //       const base64Index = imageData.indexOf("base64,") + "base64,".length;
-  //       const imageBytes = imageData.substring(base64Index);
-  //       setImage(imageBytes);
-  //     };
-  //     reader.readAsDataURL(file);
-  //     setErrImage("");
-  //   }
-  // };
-
   const handleUpdateProduct = async(e) => {
     e.preventDefault();
 
@@ -189,7 +174,7 @@ const EditProduct = () => {
           image: image,
         };
 
-        await axios.put(`${BASE_URL}/api/admin/products/update/${id}`, formData);
+        await axios.put(`${BASE_URL}/api/admin/products/${id}`, formData);
 
         toast.success(`Product "${name}" updated successfully.`);
 

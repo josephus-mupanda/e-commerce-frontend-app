@@ -6,7 +6,7 @@ import { BASE_URL } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
 import Header from "../../components/home/Header/Header";
 
-const RESET_PASSWORD_ENDPOINT = "/api/users/reset-password";
+const RESET_PASSWORD_ENDPOINT = "/api/auth/reset-password";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");

@@ -64,7 +64,7 @@ const EditPaymentMethod = () => {
           paymentMethod: name
         };
   
-        const response = await axios.put(`${BASE_URL}/api/admin/payments/update/${id}`, formData);
+        const response = await axios.put(`${BASE_URL}/api/admin/payments/${id}`, formData);
         const data = response.data;
   
         // Display success message
