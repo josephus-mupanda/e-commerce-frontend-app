@@ -12,6 +12,9 @@ import { toast } from "sonner";
 import { BASE_URL } from "../../../constants/config";
 import { AppContext } from "@/contexts/AppContext";
 import LoadingSpinner from "../../Loading/LoadingSpinner";
+import { useAppDispatch } from "@/store/hooks";
+import { clearAuth } from "@/store/authSlice";
+import { getProductImageSrc } from "@/utils/productImage";
 const HeaderBottom = () => {
 
   const { categories, product, loading } = useContext(AppContext);
@@ -35,6 +38,7 @@ const HeaderBottom = () => {
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const ref = useRef();
 
   const refUser = useRef();
@@ -93,8 +97,7 @@ const HeaderBottom = () => {
       });
       // Check if the logout was successful
       if (response.status === 200) {
-        // Clear all values in session storage
-        sessionStorage.clear();
+        dispatch(clearAuth());
         setIsLoggedIn(false);
         toast.success("Logging out...");
         // Navigate to shop route
@@ -104,10 +107,12 @@ const HeaderBottom = () => {
         // Handle logout failure
       }
     } catch (error) {
-      toast.error("Error occurred during logout:", error);
+      console.error("Error occurred during logout:", error);
+      toast.error("Error occurred during logout.");
       // Handle error
     }finally{
       setIsLoadingLogout(false);
+      setShowLogoutDialog(false);
     }
   };
 
@@ -205,7 +210,7 @@ const HeaderBottom = () => {
                       >
                         <img 
                           className="w-24 h-24"
-                          src={`data:image/jpeg;base64,${myProduct.image}`}
+                          src={getProductImageSrc(myProduct.imageUrl || myProduct.image)}
                           alt="productImg" 
                         />
                         <div className="flex flex-col gap-1">
@@ -266,7 +271,7 @@ const HeaderBottom = () => {
                       View Profile
                     </li> */}
                     <li
-                      onClick={confirmLogout}
+                      onClick={() => setShowLogoutDialog(true)}
                       className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
                     >
                       Logout
@@ -323,6 +328,33 @@ const HeaderBottom = () => {
       {isLoadingLogout && (
         <div className="flex justify-center mt-4">
           <LoadingSpinner />
+        </div>
+      )}
+      {showLogoutDialog && (
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
+          <div className="glass-panel-strong w-full max-w-sm rounded-2xl p-6 text-center">
+            <h2 className="text-xl font-black text-primeColor">Log out?</h2>
+            <p className="mt-2 text-sm text-lightText">
+              Your shopping session will be closed on this device.
+            </p>
+            <div className="mt-6 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setShowLogoutDialog(false)}
+                className="glass-control flex-1 rounded-lg px-4 py-2 font-bold text-primeColor"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmLogout}
+                disabled={isLoadingLogout}
+                className="flex-1 rounded-lg bg-[#FF8533] px-4 py-2 font-bold text-white transition hover:bg-[#FF6A00] disabled:opacity-60"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch,useSelector} from "react-redux";
 import { addToCart, addToWishlist } from "@/store/cartSlice";
 import { toast } from "sonner";
+import { getProductImageSrc } from "@/utils/productImage";
 
 const Product = (props) => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const Product = (props) => {
         <div onClick={handleProductDetails}>
           <Image className="w-full h-60" 
 
-          imgSrc={`data:image/jpeg;base64,${props.image}`}
+          imgSrc={getProductImageSrc(props.imageUrl || props.image)}
           />
         </div>
         <div className="absolute top-6 left-8">
@@ -71,7 +72,7 @@ const Product = (props) => {
                       id: props.id,
                       name: props.name,
                       quantity: 1,
-                      image: props.image,
+                      image: props.imageUrl || props.image,
                       price: props.price,
                     })
                   )
@@ -91,7 +92,7 @@ const Product = (props) => {
                     id: props.id,
                     name: props.name,
                     quantity: 1,
-                    image: props.image,
+                    image: props.imageUrl || props.image,
                     price: props.price,
                   })
                 )

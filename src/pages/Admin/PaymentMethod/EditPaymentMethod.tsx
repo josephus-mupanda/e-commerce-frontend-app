@@ -4,8 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Breadcrumbs from "../../../components/pageProps/Breadcrumbs";
 import { toast } from "sonner";
 import apiClient from "@/store/apiClient";
-import { BASE_URL,ADMIN_ROLE } from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
 
 const EditPaymentMethod = () => {
 
@@ -132,4 +131,4 @@ const EditPaymentMethod = () => {
   );
 };
 
-export default withAuthorization(EditPaymentMethod,[ADMIN_ROLE]);
+export default EditPaymentMethod;

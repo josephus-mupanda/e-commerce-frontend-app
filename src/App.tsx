@@ -1,11 +1,14 @@
 import { AppProvider } from "@/contexts/AppContext";
 import { AppRoutes } from "@/routes/AppRoutes";
+import { SessionTimeoutProvider } from "@/components/auth/SessionTimeoutProvider";
 
 function App() {
   return (
-    <div className="font-bodyFont">
+    <div className="min-h-screen bg-transparent font-bodyFont">
       <AppProvider>
-        <AppRoutes />
+        <SessionTimeoutProvider>
+          <AppRoutes />
+        </SessionTimeoutProvider>
       </AppProvider>
     </div>
   );

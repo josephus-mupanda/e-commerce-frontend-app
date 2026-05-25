@@ -8,8 +8,6 @@ import { resetWishList } from "@/store/cartSlice";
 import { emptyCart } from "../../assets/images/index";
 import WishlistItem from "./WishlistItem";
 import { toast } from "sonner";
-import { CUSTOMER_ROLE } from "../../constants/config";
-import withAuthorization from "../../constants/hoc/withAuthorization";
 import apiClient from "@/store/apiClient";
 
 const WishList = () => {
@@ -74,4 +72,4 @@ const WishList = () => {
   );
 };
 
-export default withAuthorization(WishList,[CUSTOMER_ROLE]);
+export default WishList;

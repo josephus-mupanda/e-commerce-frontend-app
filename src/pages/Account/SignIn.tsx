@@ -6,6 +6,8 @@ import apiClient from "@/store/apiClient";
 import { toast } from "sonner";
 import { BASE_URL,ADMIN_ROLE,CUSTOMER_ROLE } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
+import { useAppDispatch } from "@/store/hooks";
+import { setCredentials } from "@/store/authSlice";
 const LOGIN_ENDPOINT = "/api/auth/login";
 
 const SignIn = () => {
@@ -24,6 +26,7 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate =  useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -58,6 +61,13 @@ const SignIn = () => {
         sessionStorage.setItem("sessionId", response.data.sessionId);
         sessionStorage.setItem("userRole", response.data.userRole);
         sessionStorage.setItem("username", response.data.username);
+        dispatch(
+          setCredentials({
+            sessionId: response.data.sessionId,
+            role: response.data.userRole,
+            username: response.data.username,
+          })
+        );
 
         // Determine redirect URL based on user role
         const redirectUrl = getRedirectUrl(response.data.userRole);
@@ -69,8 +79,9 @@ const SignIn = () => {
         setPassword("");
 
       }  catch (error) {
-        if (error.response) {
-          switch (error.response.status) {
+        const status = error?.response?.status || error?.status;
+        if (status) {
+          switch (status) {
 
             case 401:
               toast.error("Invalid email or password. Please try again.");

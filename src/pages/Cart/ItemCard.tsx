@@ -8,6 +8,7 @@ import {
   drecreaseQuantity,
   increaseQuantity,
 } from "@/store/cartSlice";
+import { getProductImageSrc } from "@/utils/productImage";
 
 const ItemCard = ({ item }) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const ItemCard = ({ item }) => {
           className="text-primeColor hover:text-red-500 duration-300 cursor-pointer"
         />
         <img className="w-16 h-16" 
-         src={`data:image/jpeg;base64,${item.image}`}
+         src={getProductImageSrc(item.imageUrl || item.image)}
         //src={item.image}
          alt="productImage" />
         <h1 className="font-titleFont font-semibold">{item.name}</h1>

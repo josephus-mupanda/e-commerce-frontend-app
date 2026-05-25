@@ -2,11 +2,11 @@
 import React, { useState,useEffect } from "react";
 import Breadcrumbs from "../../../components/pageProps/Breadcrumbs";
 import { toast } from "sonner";
-import imageCompression from 'browser-image-compression';
 import {  useNavigate,useParams } from "react-router-dom"; 
 import apiClient from "@/store/apiClient";
-import { BASE_URL,ADMIN_ROLE } from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
+import { useUploadImageMutation } from "@/store/mediaApi";
+import { getProductImageSrc } from "@/utils/productImage";
 
 const EditProduct = () => {
   const { id } = useParams(); // Extract product ID from URL params
@@ -27,6 +27,7 @@ const EditProduct = () => {
   const [errImage, setErrImage] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const navigate = useNavigate(); // Hook for navigation
+  const [uploadImage, { isLoading: isUploadingImage }] = useUploadImageMutation();
  
 
   useEffect(() => {
@@ -55,7 +56,7 @@ const EditProduct = () => {
         setPrice(product.price);
         setQuantity(product.quantity);
         setDescription(product.description);
-        setImage(product.image);
+        setImage(product.imageUrl || product.image);
       } catch (error) {
         console.error("Error fetching product details:", error);
         toast.error("Error fetching product details. Please try again later.");
@@ -93,32 +94,17 @@ const EditProduct = () => {
   };
 
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (file) {
       try {
-        // Options for image compression
-        const options = {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 800,
-          useWebWorker: true
-        };
-
-        // Compress the image
-        const compressedFile = await imageCompression(file, options);
-
-        // Convert compressed file to base64
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const imageData = reader.result;
-          const base64Index = imageData.indexOf("base64,") + "base64,".length;
-          const imageBytes = imageData.substring(base64Index);
-          setImage(imageBytes);
-        };
-        reader.readAsDataURL(compressedFile);
         setErrImage("");
+        const uploaded = await uploadImage(file).unwrap();
+        setImage(uploaded.url);
+        toast.success("Image uploaded to Cloudinary.");
       } catch (error) {
-        console.error("Error while compressing image:", error);
-        setErrImage("Failed to upload image. Please try again.");
+        console.error("Error while uploading image:", error);
+        setErrImage("Cloudinary upload failed. Check .env configuration.");
+        toast.error("Cloudinary upload failed. Check .env configuration.");
       }
     }
   };
@@ -173,6 +159,7 @@ const EditProduct = () => {
             },
           },
           image: image,
+          imageUrl: image,
         };
 
         await apiClient.put(`${BASE_URL}/api/admin/products/${id}`, formData);
@@ -324,7 +311,7 @@ const EditProduct = () => {
                   htmlFor="upload-image"
                   className="w-full h-8 bg-blue-500 text-white text-center rounded-md cursor-pointer flex justify-center items-center"
                 >
-                  Upload Image
+                  {isUploadingImage ? "Uploading..." : "Upload Image"}
                 </label>
                 {errImage && (
                   <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -334,7 +321,7 @@ const EditProduct = () => {
                 )}
                 {image && (
                   <img
-                  src={`data:image/jpeg;base64,${image}`}
+                  src={getProductImageSrc(image)}
                   alt="Uploaded Product"
                   className="w-20 h-20 mt-2 rounded-md"
                 />
@@ -358,4 +345,4 @@ const EditProduct = () => {
   );
 };
 
-export default withAuthorization(EditProduct,[ADMIN_ROLE]);
+export default EditProduct;

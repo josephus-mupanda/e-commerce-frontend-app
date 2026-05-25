@@ -17,9 +17,9 @@ import { toast } from "sonner";
 import { logo } from "@/assets/images";
 import { AppContext } from "@/contexts/AppContext";
 import { useContext } from "react";
-import { ADMIN_ROLE } from "@/constants/config";
-import withAuthorization from "@/constants/hoc/withAuthorization";
 import { useApiRequestMutation } from "@/store/apiSlice";
+import { clearAuth } from "@/store/authSlice";
+import { useAppDispatch } from "@/store/hooks";
 
 const navItems = [
   { title: "Dashboard", link: "/admin", icon: LayoutDashboard },
@@ -36,6 +36,7 @@ const AdminShell = () => {
   const [apiRequest, { isLoading: isLoggingOut }] = useApiRequestMutation();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const { product, adminOrders, adminCategories, payments } = useContext(AppContext);
 
   const pageTitle = useMemo(() => {
@@ -64,7 +65,7 @@ const AdminShell = () => {
           role: sessionStorage.getItem("userRole"),
         },
       }).unwrap();
-      sessionStorage.clear();
+      dispatch(clearAuth());
       toast.success("Logging out...");
       navigate("/");
     } catch {
@@ -248,4 +249,4 @@ const AdminShell = () => {
   );
 };
 
-export default withAuthorization(AdminShell, [ADMIN_ROLE]);
+export default AdminShell;

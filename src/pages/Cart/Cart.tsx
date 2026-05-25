@@ -9,9 +9,8 @@ import { emptyCart } from "../../assets/images/index";
 import ItemCard from "./ItemCard";
 import { toast } from "sonner";
 import apiClient from "@/store/apiClient";
-import { BASE_URL ,CUSTOMER_ROLE} from "../../constants/config";
+import { BASE_URL } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
-import withAuthorization from "../../constants/hoc/withAuthorization";
 const Cart = () => {
 
   const dispatch = useDispatch();
@@ -350,4 +349,4 @@ const Cart = () => {
   );
 };
 
-export default withAuthorization(Cart,[CUSTOMER_ROLE]);
+export default Cart;

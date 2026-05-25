@@ -4,8 +4,7 @@ import Breadcrumbs from "../../../components/pageProps/Breadcrumbs";
 import Flex from "../../../components/designLayouts/Flex";
 import { FaSearch } from "react-icons/fa";
 import apiClient from "@/store/apiClient";
-import { BASE_URL,ADMIN_ROLE } from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
 
 const CustomTable = ({ data, onDelete }) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -249,5 +248,5 @@ const UserManagement = () => {
   );
 };
 
-export default withAuthorization(UserManagement,[ADMIN_ROLE]);
+export default UserManagement;
 

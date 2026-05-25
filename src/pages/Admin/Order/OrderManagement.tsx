@@ -9,8 +9,7 @@ import { FaShippingFast } from "react-icons/fa";
 import { FaTruck } from "react-icons/fa";
 import { toast } from "sonner";
 import apiClient from "@/store/apiClient";
-import { BASE_URL,ADMIN_ROLE } from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
 import { AppContext } from "@/contexts/AppContext";
 const CustomTable = ({ data, onDelete, onDispatch, onCancel, onComplete }) => {
   
@@ -640,4 +639,4 @@ const OrderManagement = () => {
   );
 };
 
-export default withAuthorization(OrderManagement, [ADMIN_ROLE]);
+export default OrderManagement;

@@ -5,7 +5,10 @@ import {
   Route,
   RouterProvider,
   ScrollRestoration,
+  Navigate,
 } from "react-router-dom";
+import type { ReactNode } from "react";
+import { useAppSelector } from "@/store/hooks";
 import Footer from "@/components/home/Footer/Footer";
 import FooterBottom from "@/components/home/Footer/FooterBottom";
 import Header from "@/components/home/Header/Header";
@@ -30,7 +33,6 @@ import Shop from "@/pages/Shop/Shop";
 import CategoryManagement from "@/pages/Admin/Category/CategoryManagement";
 import ProductManagement from "@/pages/Admin/Product/ProductManagement";
 import OrderManagement from "@/pages/Admin/Order/OrderManagement";
-import Logout from "@/pages/Admin/Logout/Logout";
 import Analytics from "@/pages/Admin/Analytics/Analytics";
 import CreateCategory from "@/pages/Admin/Category/CreateCategory";
 import CreateProduct from "@/pages/Admin/Product/CreateProduct";
@@ -44,6 +46,37 @@ import OrderDetails from "@/pages/Order/OrderDetails";
 import AccessDenied from "@/constants/hoc/AccessDenied";
 import AuthenticationFailed from "@/constants/hoc/AuthenticationFailed";
 import NotFound from "@/constants/hoc/NotFound";
+
+type AppRole = "ADMIN" | "CUSTOMER";
+
+const getDefaultPath = (role?: AppRole) => {
+  if (role === "ADMIN") return "/admin";
+  if (role === "CUSTOMER") return "/shop";
+  return "/signin";
+};
+
+const ProtectedRoute = ({
+  children,
+  allowedRoles,
+}: {
+  children: ReactNode;
+  allowedRoles?: AppRole[];
+}) => {
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const sessionRole = sessionStorage.getItem("userRole") as AppRole | null;
+  const role = user?.role || sessionRole || undefined;
+  const hasSession = isAuthenticated || Boolean(sessionStorage.getItem("sessionId"));
+
+  if (!hasSession) {
+    return <Navigate to="/signin" replace />;
+  }
+
+  if (allowedRoles && (!role || !allowedRoles.includes(role))) {
+    return <Navigate to={getDefaultPath(role)} replace />;
+  }
+
+  return <>{children}</>;
+};
 
 const ShopLayout = () => (
   <div>
@@ -65,13 +98,48 @@ const router = createBrowserRouter(
         <Route path="/shop" element={<Shop />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/order" element={<Order />} />
+        <Route
+          path="/order"
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <Order />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/category/:category" element={<Offer />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/order/:id" element={<OrderDetails />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/wishlist" element={<WishList />} />
-        <Route path="/paymentgateway" element={<Payment />} />
+        <Route
+          path="/order/:id"
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <OrderDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <WishList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/paymentgateway"
+          element={
+            <ProtectedRoute allowedRoles={["CUSTOMER"]}>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       <Route path="/signup" element={<SignUp />} />
@@ -83,7 +151,14 @@ const router = createBrowserRouter(
       <Route path="/not-found" element={<NotFound />} />
       <Route path="/authentication-failed" element={<AuthenticationFailed />} />
 
-      <Route path="/admin/*" element={<AdminShell />}>
+      <Route
+        path="/admin/*"
+        element={
+          <ProtectedRoute allowedRoles={["ADMIN"]}>
+            <AdminShell />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<Analytics />} />
         <Route path="customers" element={<UserManagement />} />
         <Route path="category" element={<CategoryManagement />} />
@@ -96,7 +171,6 @@ const router = createBrowserRouter(
         <Route path="create-payment" element={<CreatePaymentMethod />} />
         <Route path="update-payment/:id" element={<EditPaymentMethod />} />
         <Route path="orders" element={<OrderManagement />} />
-        <Route path="logout" element={<Logout />} />
       </Route>
     </Route>
   )

@@ -7,7 +7,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { store, persistor } from "@/store/store";
 import "./index.css";
-import "./styles/theme.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(

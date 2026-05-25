@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumbs from "../../../components/pageProps/Breadcrumbs";
 import { toast } from "sonner";
-import imageCompression from 'browser-image-compression';
 import {useNavigate } from "react-router-dom"; 
 import apiClient from "@/store/apiClient";
-import { BASE_URL,ADMIN_ROLE } from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
+import { useUploadImageMutation } from "@/store/mediaApi";
+import { getProductImageSrc } from "@/utils/productImage";
 const CreateProduct = () => {
 
   const [categories, setCategories] = useState([]);
@@ -23,6 +23,7 @@ const CreateProduct = () => {
   const [errDescription, setErrDescription] = useState("");
   const [errImage, setErrImage] = useState("");
   const navigate = useNavigate(); // Hook for navigation
+  const [uploadImage, { isLoading: isUploadingImage }] = useUploadImageMutation();
  
 
   useEffect(() => {
@@ -65,32 +66,17 @@ const CreateProduct = () => {
   };
 
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (file) {
       try {
-        // Options for image compression
-        const options = {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 800,
-          useWebWorker: true
-        };
-
-        // Compress the image
-        const compressedFile = await imageCompression(file, options);
-
-        // Convert compressed file to base64
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const imageData = reader.result;
-          const base64Index = imageData.indexOf("base64,") + "base64,".length;
-          const imageBytes = imageData.substring(base64Index);
-          setImage(imageBytes);
-        };
-        reader.readAsDataURL(compressedFile);
         setErrImage("");
+        const uploaded = await uploadImage(file).unwrap();
+        setImage(uploaded.url);
+        toast.success("Image uploaded to Cloudinary.");
       } catch (error) {
-        console.error("Error while compressing image:", error);
-        setErrImage("Failed to upload image. Please try again.");
+        console.error("Error while uploading image:", error);
+        setErrImage("Cloudinary upload failed. Check .env configuration.");
+        toast.error("Cloudinary upload failed. Check .env configuration.");
       }
     }
   };
@@ -145,7 +131,8 @@ const CreateProduct = () => {
               id: sessionStorage.getItem('sessionId')
             }
           },
-          image: image
+          image: image,
+          imageUrl: image
         };
 
         await apiClient.post(`${BASE_URL}/api/admin/products`, formData);
@@ -299,7 +286,7 @@ const CreateProduct = () => {
                   htmlFor="upload-image"
                   className="w-full h-8 bg-blue-500 text-white text-center rounded-md cursor-pointer flex justify-center items-center"
                 >
-                  Upload Image
+                  {isUploadingImage ? "Uploading..." : "Upload Image"}
                 </label>
                 {errImage && (
                   <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -309,7 +296,7 @@ const CreateProduct = () => {
                 )}
                 {image && (
                   <img
-                  src={`data:image/jpeg;base64,${image}`}
+                  src={getProductImageSrc(image)}
                   alt="Uploaded Product"
                   className="w-20 h-20 mt-2 rounded-md"
                 />
@@ -332,4 +319,4 @@ const CreateProduct = () => {
   );
 };
 
-export default withAuthorization(CreateProduct,[ADMIN_ROLE]);
+export default CreateProduct;

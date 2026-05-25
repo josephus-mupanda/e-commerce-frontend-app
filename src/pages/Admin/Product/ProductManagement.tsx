@@ -5,8 +5,8 @@ import { Link ,useNavigate} from "react-router-dom";
 import Flex from "../../../components/designLayouts/Flex";
 import { FaSearch } from "react-icons/fa";
 import apiClient from "@/store/apiClient";
-import { BASE_URL, ADMIN_ROLE } from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
+import { getProductImageSrc } from "@/utils/productImage";
 // Customized table component
 const CustomTable = ({ data , onDelete }) => {
 
@@ -94,7 +94,7 @@ const CustomTable = ({ data , onDelete }) => {
             <p>Category: {productIdToView.category}</p>
             
             <img
-              src={`data:image/jpeg;base64,${productIdToView.image}`}
+              src={getProductImageSrc(productIdToView.imageUrl || productIdToView.image)}
               alt={productIdToView.name}
               className="w-16 h-16 object-cover"
             />
@@ -173,7 +173,7 @@ const CustomTable = ({ data , onDelete }) => {
                 </td>
                 <td className="px-6 py-4">
                   <img
-                    src={`data:image/jpeg;base64,${product.image}`}
+                    src={getProductImageSrc(product.imageUrl || product.image)}
                     alt={product.name}
                     className="w-16 h-16 object-cover"
                   />
@@ -219,7 +219,7 @@ const CustomTable = ({ data , onDelete }) => {
             <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
             <div className="my-2">
               <img
-                src={`data:image/jpeg;base64,${product.image}`}
+                src={getProductImageSrc(product.imageUrl || product.image)}
                 alt={product.name}
                 className="w-32 h-32 object-cover"
               />
@@ -384,4 +384,4 @@ const ProductManagement = () => {
   );
 };
 
-export default withAuthorization(ProductManagement,[ADMIN_ROLE]);
+export default ProductManagement;

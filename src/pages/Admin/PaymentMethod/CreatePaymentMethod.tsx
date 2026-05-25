@@ -4,8 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../../components/pageProps/Breadcrumbs";
 import { toast } from "sonner";
 import apiClient from "@/store/apiClient";
-import { BASE_URL,ADMIN_ROLE } from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
 const CreatePaymentMethod = () => {
   
     // ============= Initial State Start here =============
@@ -102,4 +101,4 @@ const CreatePaymentMethod = () => {
   );
 };
 
-export default withAuthorization(CreatePaymentMethod,[ADMIN_ROLE]);
+export default CreatePaymentMethod;

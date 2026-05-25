@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import {
   removeFromWishlist,
 } from "@/store/cartSlice";
+import { getProductImageSrc } from "@/utils/productImage";
 
 const WishlistItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const WishlistItem = ({ item }) => {
           className="text-primeColor hover:text-red-500 duration-300 cursor-pointer"
         />
         <img className="w-16 h-16" 
-         src={`data:image/jpeg;base64,${item.image}`}
+         src={getProductImageSrc(item.imageUrl || item.image)}
          alt="productImage" />
         <h1 className="font-titleFont font-semibold">{item.name}</h1>
       </div>

@@ -6,8 +6,7 @@ import { Link ,useNavigate} from "react-router-dom";
 import Flex from "../../../components/designLayouts/Flex";
 import { FaSearch } from "react-icons/fa";
 import apiClient from "@/store/apiClient";
-import { BASE_URL,ADMIN_ROLE } from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
 // Customized table component
 const CustomTable = ({ data , onDelete }) => {
 
@@ -322,4 +321,4 @@ const PaymentManagement = () => {
   );
 };
 
-export default withAuthorization(PaymentManagement, [ADMIN_ROLE]);
+export default PaymentManagement;

@@ -10,8 +10,7 @@ import { FaSearch } from "react-icons/fa";
 import { BsEye, BsX } from "react-icons/bs"; 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsArrowRepeat } from "react-icons/bs";
-import { BASE_URL , CUSTOMER_ROLE} from "../../constants/config";
-import withAuthorization from "../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../constants/config";
 import apiClient from "@/store/apiClient";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
 const Order = () => {
@@ -555,5 +554,5 @@ const Order = () => {
   );
 };
 
-export default withAuthorization(Order,[CUSTOMER_ROLE]);
+export default Order;
 

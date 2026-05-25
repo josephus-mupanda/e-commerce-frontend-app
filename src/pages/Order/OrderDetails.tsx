@@ -5,8 +5,7 @@ import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import apiClient from "@/store/apiClient";
 import { toast } from "sonner";
 import { shipOrder,deliverOrder,paymentOrder,spinnerOrder } from "../../assets/images";
-import { BASE_URL,CUSTOMER_ROLE } from "../../constants/config";
-import withAuthorization from "../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
 const OrderDetails = () => {
 
@@ -212,4 +211,4 @@ const OrderDetails = () => {
   );
 };
 
-export default withAuthorization(OrderDetails, CUSTOMER_ROLE);
+export default OrderDetails;

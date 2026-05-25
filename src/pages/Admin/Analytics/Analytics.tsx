@@ -8,8 +8,6 @@ import {
   Users,
 } from "lucide-react";
 import { AppContext } from "@/contexts/AppContext";
-import { ADMIN_ROLE } from "@/constants/config";
-import withAuthorization from "@/constants/hoc/withAuthorization";
 
 const statusTone: Record<string, string> = {
   PENDING: "bg-amber-100 text-amber-700",
@@ -172,4 +170,4 @@ const Analytics = () => {
   );
 };
 
-export default withAuthorization(Analytics, [ADMIN_ROLE]);
+export default Analytics;

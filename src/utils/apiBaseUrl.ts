@@ -5,3 +5,8 @@ export const getApiBaseUrl = () =>
   )
     .trim()
     .replace(/\/$/, "");
+
+export const getMediaBaseUrl = () =>
+  String(import.meta.env.VITE_MEDIA_BASE_URL || getApiBaseUrl())
+    .trim()
+    .replace(/\/$/, "");

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import ProductInfo from "../../components/pageProps/productDetails/ProductInfo";
 import NewArrivals from "../../components/home/NewArrivals/NewArrivals";
+import { getProductImageSrc } from "@/utils/productImage";
 const ProductDetails = () => {
   const location = useLocation();
   const [prevLocation, setPrevLocation] = useState("");
@@ -31,7 +32,7 @@ const ProductDetails = () => {
           <div className="h-full xl:col-span-2">
             <img
               className="w-full h-full "
-              src={`data:image/jpeg;base64,${productInfo.image}`}
+              src={getProductImageSrc(productInfo.imageUrl || productInfo.image)}
               alt={productInfo.image}
             />
           </div>

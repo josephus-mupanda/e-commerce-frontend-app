@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import apiClient from "@/store/apiClient";
 import { BASE_URL } from "../../constants/config";
+import { useAppDispatch } from "@/store/hooks";
+import { clearAuth } from "@/store/authSlice";
 
 const SpecialCase = () => {
   const products = useSelector((state) => state.orebiReducer.products);
@@ -18,6 +20,7 @@ const SpecialCase = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     // Check if the session ID exists in sessionStorage
@@ -48,8 +51,7 @@ const SpecialCase = () => {
       });
       // Check if the logout was successful
       if (response.status === 200) {
-        // Clear all values in session storage
-        sessionStorage.clear();
+        dispatch(clearAuth());
         setIsLoggedIn(false);
         toast.success("Logging out...");
         // Navigate to shop route
@@ -59,8 +61,11 @@ const SpecialCase = () => {
         // Handle logout failure
       }
     } catch (error) {
-      toast.error("Error occurred during logout:", error);
+      console.error("Error occurred during logout:", error);
+      toast.error("Error occurred during logout.");
       // Handle error
+    } finally {
+      setShowLogoutDialog(false);
     }
   };
 
@@ -69,21 +74,21 @@ const SpecialCase = () => {
     <div className="fixed top-52 right-2 z-20 hidden md:flex flex-col gap-2">
 
         {showLogoutDialog && (
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-            <div className="bg-white p-6 rounded-lg">
-              <p className="text-lg font-semibold mb-4">
-                Are you sure you want to log out?
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
+            <div className="glass-panel-strong w-full max-w-sm rounded-2xl p-6 text-center">
+              <p className="text-lg font-black mb-4 text-primeColor">
+                Log out?
               </p>
-              <div className="flex justify-end">
+              <div className="flex justify-end gap-3">
                 <button
                   onClick={confirmLogout}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md mr-2"
+                  className="bg-[#FF8533] hover:bg-[#FF6A00] text-white px-4 py-2 rounded-md"
                 >
                   Logout
                 </button>
                 <button
                   onClick={cancelLogout}
-                  className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
+                  className="glass-control text-gray-800 px-4 py-2 rounded-md"
                 >
                   Cancel
                 </button>

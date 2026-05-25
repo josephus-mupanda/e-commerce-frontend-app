@@ -4,8 +4,7 @@ import {useNavigate } from "react-router-dom";
 import Breadcrumbs from "../../../components/pageProps/Breadcrumbs";
 import { toast } from "sonner";
 import apiClient from "@/store/apiClient";
-import { BASE_URL ,ADMIN_ROLE} from "../../../constants/config";
-import withAuthorization from "../../../constants/hoc/withAuthorization";
+import { BASE_URL } from "../../../constants/config";
 
 const CreateCategory = () => {
   // ============= Initial State Start here =============
@@ -136,4 +135,4 @@ const CreateCategory = () => {
   );
 };
 
-export default withAuthorization(CreateCategory,[ADMIN_ROLE]);
+export default CreateCategory;
