@@ -23,7 +23,7 @@ const CustomSlide = ({ Subtext, imgSrc, text, buttonLink, buttonText }) => (
         <p className="mt-5 max-w-2xl text-base font-medium leading-8 text-white/86 md:text-xl">
           {Subtext}
         </p>
-        <div className="mt-8 flex flex-wrap items-center gap-3">
+        <div className="jshop-hero-actions mt-8 flex flex-wrap items-center gap-3">
           <Link to={buttonLink}>
             <button className="jshop-primary-button px-7 py-3 text-base font-black">
               {buttonText}

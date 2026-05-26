@@ -67,7 +67,7 @@ const Header = () => {
                 {navBarList.map(({ _id, title, link }) => (
                     <NavLink
                       key={_id}
-                      className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#33333] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#FF6A00] md:border-r-[2px] border-r-[#E5E5E5] hoverEffect last:border-r-0"
+                      className="jshop-nav-link flex font-bold h-10 justify-center items-center px-4 text-sm text-primeColor hover:text-[#FF6A00] hoverEffect"
                       to={link}
                       state={{ data: location.pathname.split("/")[1] }}
                     >
@@ -80,7 +80,7 @@ const Header = () => {
             )}
             <HiMenuAlt2
               onClick={() => setSidenav(!sidenav)}
-              className="inline-block md:hidden cursor-pointer w-8 h-6 absolute top-6 right-4"
+              className="jshop-mobile-menu-button inline-block md:hidden cursor-pointer w-8 h-6 absolute top-6 right-4 text-primeColor"
             />
             {sidenav && (
               <div className="fixed top-0 left-0 w-full h-screen bg-black text-gray-200 bg-opacity-80 z-50">

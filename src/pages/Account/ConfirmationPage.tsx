@@ -51,14 +51,14 @@ const ConfirmationPage = () => {
   }, [location.search,navigate]);
 
   return (
-    <div>
+    <div className="jshop-auth-page">
         <Header />
-        <div className="w-full h-screen flex items-center justify-center">
+        <div className="jshop-auth-screen w-full min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 py-10">
         <div className="w-full lgl:w-1/2 h-full">
           {loading ? (
             <LoadingSpinner />
           ) : (
-            <div className="text-center">
+            <div className="jshop-auth-card p-8 text-center">
               <h1 className="text-2xl font-bold">{message}</h1>
             </div>
           )}

@@ -46,22 +46,27 @@ const HeaderBottom = () => {
 
  
   useEffect(() => {
-    document.body.addEventListener("click", (e) => {
-      if (ref.current.contains(e.target)) {
+    const onBodyClick = (e) => {
+      if (ref.current && ref.current.contains(e.target)) {
         setShow(true);
       } else {
         setShow(false);
       }
-    });
+    };
+    document.body.addEventListener("click", onBodyClick);
+    return () => document.body.removeEventListener("click", onBodyClick);
   }, [show, ref]);
 
   useEffect(() => {
-    document.body.addEventListener("click", (e) => {
-      // Check if the click is outside of the user dropdown menu and the user icon
-      if (!refUser.current.contains(e.target) && !refUserMenu.current.contains(e.target)) {
-        setShowUser(false); // Close the user dropdown menu
+    const onBodyClick = (e) => {
+      const clickedUser = refUser.current && refUser.current.contains(e.target);
+      const clickedMenu = refUserMenu.current && refUserMenu.current.contains(e.target);
+      if (!clickedUser && !clickedMenu) {
+        setShowUser(false);
       }
-    });
+    };
+    document.body.addEventListener("click", onBodyClick);
+    return () => document.body.removeEventListener("click", onBodyClick);
   }, []);
 
   useEffect(() => {
@@ -120,11 +125,11 @@ const HeaderBottom = () => {
 
     <div className="jshop-subheader w-full relative">
       <div className="max-w-container mx-auto">
-        <Flex className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full px-4 pb-4 lg:pb-0 h-full lg:h-24">
+        <Flex className="flex flex-col gap-4 lg:flex-row items-stretch lg:items-center justify-between w-full px-4 py-4 h-full lg:min-h-24">
           <div
             onClick={() => setShow(!show)}
             ref={ref}
-            className="flex h-14 cursor-pointer items-center gap-2 text-primeColor"
+            className="jshop-category-trigger flex h-12 cursor-pointer items-center gap-2 text-primeColor"
           >
             <HiOutlineMenuAlt4 className="w-5 h-5" />
             <p className="text-[14px] font-normal">Order by Category</p>
@@ -133,7 +138,7 @@ const HeaderBottom = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="jshop-popover absolute top-36 z-50 w-auto h-auto p-4 pb-6"
+                className="jshop-popover absolute left-4 top-16 z-50 w-72 max-w-[calc(100vw-2rem)] h-auto p-3"
               >
                 {categories.map((category) => (
                   <Link key={category.id} to={`/category/${category.name}`}>
@@ -145,7 +150,7 @@ const HeaderBottom = () => {
               </motion.ul>
             )}
           </div>
-          <div className="glass-control relative w-full lg:w-[600px] h-[50px] text-base text-primeColor flex items-center gap-2 justify-between px-6 rounded-xl">
+          <div className="glass-control relative w-full lg:max-w-[620px] h-[50px] text-base text-primeColor flex items-center gap-2 justify-between px-6 rounded-xl">
             <input
               className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
               type="text"
@@ -156,7 +161,7 @@ const HeaderBottom = () => {
             <FaSearch className="w-5 h-5" />
             {searchQuery && (
               <div
-                className={`w-full mx-auto h-96 bg-white top-16 absolute left-0 z-50 overflow-y-scroll shadow-2xl scrollbar-hide cursor-pointer`}
+                className="jshop-search-results w-full mx-auto max-h-96 top-16 absolute left-0 z-50 overflow-y-auto scrollbar-hide cursor-pointer"
               >
               
               {/* Show skeleton loading while data is being fetched */}
@@ -164,8 +169,8 @@ const HeaderBottom = () => {
               !filteredProducts.length ? (
                 <div className="animate-pulse">
                   {[...Array(4)].map((_, index) => (
-                     <div key={index} className="max-w-[600px] h-24  bg-gray-200 mb-3 flex items-center gap-3 animate-pulse rounded">
-                     <div className="w-24 h-24 bg-gray-300 animate-pulse rounded "></div>
+                     <div key={index} className="jshop-search-row max-w-[600px] h-24 mb-3 flex items-center gap-3 animate-pulse">
+                     <div className="w-24 h-24 bg-white/60 animate-pulse rounded "></div>
                      <div className="flex flex-col gap-1 ">
                        {/* Placeholder for product name */}
                        <div className="w-3/4 h-5 bg-gray-200 rounded animate-pulse"></div>
@@ -206,10 +211,10 @@ const HeaderBottom = () => {
                         } 
                         }
                         key={myProduct.id}
-                        className="max-w-[600px] h-24 bg-gray-100 mb-3 flex items-center gap-3"
+                        className="jshop-search-row max-w-[600px] h-24 mb-3 flex items-center gap-3"
                       >
                         <img 
-                          className="w-24 h-24"
+                          className="w-24 h-24 object-cover"
                           src={getProductImageSrc(myProduct.imageUrl || myProduct.image)}
                           alt="productImg" 
                         />
@@ -239,7 +244,7 @@ const HeaderBottom = () => {
             )
             }
           </div>
-          <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative">
+          <div className="jshop-actions-bar flex gap-4 mt-2 lg:mt-0 items-center cursor-pointer relative">
             { isLoggedIn ? (
               <div  ref={refUser}  onClick={() => setShowUser(!showUser)} className="flex items-center">
                 <div className="w-8 h-8 rounded-full bg-[#FF8533] hover:bg-[#FF6A00] text-white  hover:text-white flex items-center justify-center mr-2">
@@ -261,7 +266,7 @@ const HeaderBottom = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="jshop-popover absolute top-6 left-0 z-50 w-44 h-auto p-4 pb-6"
+                className="jshop-account-menu absolute top-10 right-0 z-50 w-52 h-auto p-2"
               >
                 {/* Check if the user is logged in */}
                 {isLoggedIn ? (

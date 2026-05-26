@@ -98,7 +98,7 @@ const SpecialCase = () => {
         )}
       {!isLoggedIn ? (
         <Link to="/signin">
-         <div className="bg-white w-16 h-[70px] rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer">
+         <div className="jshop-floating-action group">
            <div className="flex justify-center items-center">
              <MdLogin className="text-2xl -translate-x-12 group-hover:translate-x-3 transition-transform duration-200" />
  
@@ -124,7 +124,7 @@ const SpecialCase = () => {
       <Link to={isLoggedIn ? "/cart" : "#"} onClick={isLoggedIn ? null : handleLoginToast}>
         {/* <div className="bg-white w-16 h-[70px] rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer relative">
            */}
-          <div className={`bg-white w-16 h-[70px] rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer relative ${
+          <div className={`jshop-floating-action group relative ${
             isLoggedIn ? "" : "pointer-events-none"
           }`}
           >
@@ -145,7 +145,7 @@ const SpecialCase = () => {
       <Link to={isLoggedIn ? "/wishlist" : "#"} onClick={isLoggedIn ? null : handleLoginToast}>
         {/* <div className="bg-white w-16 h-[70px] rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer relative"> */}
           
-        <div className={`bg-white w-16 h-[70px] rounded-md flex flex-col gap-1 text-[#33475b] justify-center items-center shadow-testShadow overflow-x-hidden group cursor-pointer relative ${
+        <div className={`jshop-floating-action group relative ${
             isLoggedIn ? "" : "pointer-events-none"
           }`}
           >

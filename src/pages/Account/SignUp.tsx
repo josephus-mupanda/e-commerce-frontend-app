@@ -137,7 +137,7 @@ const SignUp = () => {
       <div className="jshop-auth-screen w-full min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 py-10">
         <div className="w-full lgl:w-1/2 h-full">
           {successMsg ? (
-            <div className="w-[500px]">
+            <div className="jshop-auth-card w-full max-w-[500px] p-6">
               <p className="w-full px-4 py-10 text-green-500 font-medium font-titleFont">
                 {successMsg}
               </p>

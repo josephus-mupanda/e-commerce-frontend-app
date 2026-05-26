@@ -51,9 +51,9 @@ const Footer = () => {
     }
   };
   return (
-    <div className="w-full bg-[#F5F5F3] py-20">
-      <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-6 px-4 gap-10">
-        <div className="col-span-2">
+    <div className="jshop-footer w-full py-16 px-4">
+      <div className="jshop-footer-panel max-w-container mx-auto grid grid-cols-1 gap-8 p-5 md:grid-cols-2 xl:grid-cols-6">
+        <div className="xl:col-span-2">
           <FooterListTitle title=" More about J-Shop" />
           <div className="flex flex-col gap-6">
             {/* <p className="text-base w-full xl:w-[80%]">
@@ -66,7 +66,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
+                <li className="jshop-social-icon">
                   <FaInstagram />
                 </li>
               </a>
@@ -75,7 +75,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
+                <li className="jshop-social-icon">
                   <FaGithub />
                 </li>
               </a>
@@ -84,7 +84,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
+                <li className="jshop-social-icon">
                   <FaTwitter />
                 </li>
               </a>
@@ -93,7 +93,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
+                <li className="jshop-social-icon">
                   <FaLinkedin />
                 </li>
               </a>
@@ -133,7 +133,7 @@ const Footer = () => {
           
           </ul>
         </div>
-        <div className="col-span-2 flex flex-col items-center w-full px-4">
+        <div className="xl:col-span-2 flex flex-col items-start w-full">
           <FooterListTitle title="Subscribe to our newsletter." />
           <div className="w-full">
             <p className="text-left mb-4">
@@ -151,12 +151,12 @@ const Footer = () => {
   
               </motion.p>
             ) : (
-              <div className="w-full flex-col xl:flex-row flex justify-between items-center gap-4">
+              <div className="w-full flex-col xl:flex-row flex justify-between items-stretch xl:items-center gap-4">
                 <div className="flex flex-col w-full">
                   <input
                     onChange={(e) => setEmailInfo(e.target.value)}
                     value={emailInfo}
-                    className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
+                    className="glass-control w-full h-12 px-4 text-primeColor text-lg placeholder:text-base outline-none"
                     type="text"
                     placeholder="Insert your email ...*"
                   />
@@ -168,7 +168,7 @@ const Footer = () => {
                 </div>
                 <button
                   onClick={handleSubscription}
-                  className="bg-white text-lightText w-[30%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
+                  className="jshop-primary-button w-full xl:w-auto h-12 px-6 text-base font-black"
                 >
                   Subscribe
                 </button>
