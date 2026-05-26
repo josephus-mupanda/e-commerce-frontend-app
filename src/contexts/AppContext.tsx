@@ -36,13 +36,17 @@ export const AppContext = createContext<AppContextValue>({
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const userId = sessionStorage.getItem("sessionId");
+  const userRole = sessionStorage.getItem("userRole");
+  const isAdmin = userRole === "ADMIN";
 
   const categoriesQuery = useGetCustomerCategoriesQuery();
-  const adminCategoriesQuery = useGetAdminCategoriesQuery();
+  const adminCategoriesQuery = useGetAdminCategoriesQuery(undefined, {
+    skip: !isAdmin,
+  });
   const productsQuery = useGetCustomerProductsQuery();
-  const paymentsQuery = useGetPaymentsQuery();
+  const paymentsQuery = useGetPaymentsQuery(undefined, { skip: !isAdmin });
   const ordersQuery = useGetCustomerOrdersQuery(userId, { skip: !userId });
-  const adminOrdersQuery = useGetAdminOrdersQuery();
+  const adminOrdersQuery = useGetAdminOrdersQuery(undefined, { skip: !isAdmin });
 
   const loading =
     categoriesQuery.isLoading ||

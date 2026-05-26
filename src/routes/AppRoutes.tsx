@@ -92,7 +92,7 @@ const ShopLayout = () => (
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
+    <Route errorElement={<NotFound />}>
       <Route path="/" element={<ShopLayout />}>
         <Route index element={<Home />} />
         <Route path="/shop" element={<Shop />} />
@@ -144,12 +144,14 @@ const router = createBrowserRouter(
 
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
+      <Route path="/verify-email" element={<ConfirmationPage />} />
       <Route path="/api/users/confirm" element={<ConfirmationPage />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/access-denied" element={<AccessDenied />} />
       <Route path="/not-found" element={<NotFound />} />
       <Route path="/authentication-failed" element={<AuthenticationFailed />} />
+      <Route path="*" element={<NotFound />} />
 
       <Route
         path="/admin/*"

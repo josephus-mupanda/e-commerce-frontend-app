@@ -125,14 +125,8 @@ const CreateProduct = () => {
           price: parseFloat(price),
           quantity: parseInt(quantity),
           description: description,
-          category: {
-            id: category, // sessionStorage.getItem('categoryId'),
-            user: {
-              id: sessionStorage.getItem('sessionId')
-            }
-          },
-          image: image,
-          imageUrl: image
+          categoryId: category,
+          imageUrl: image,
         };
 
         await apiClient.post(`${BASE_URL}/api/admin/products`, formData);

@@ -6,17 +6,21 @@ import { toast } from "sonner";
 import { BASE_URL } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
 import Header from "../../components/home/Header/Header";
+import OtpInput from "@/components/auth/OtpInput";
 
-const RESET_PASSWORD_ENDPOINT = "/api/auth/reset-password";
+const CHANGE_PASSWORD_ENDPOINT = "/api/auth/change-password";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [otp, setOtp] = useState("");
   const [errPassword, setErrPassword] = useState("");
   const [errConfirmPassword, setErrConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const email =
+    location.state?.email || new URLSearchParams(location.search).get("email");
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
@@ -35,6 +39,10 @@ const ResetPassword = () => {
     } else if (password.length < 6) {
       setErrPassword("Passwords must be at least 6 characters");
     }
+    if (!/^\d{6}$/.test(otp)) {
+      toast.error("Enter the 6-digit OTP code.");
+      return;
+    }
     if (password !== confirmPassword) {
       setErrConfirmPassword("Passwords do not match");
     }
@@ -45,11 +53,9 @@ const ResetPassword = () => {
       password === confirmPassword
     ) {
       setIsLoading(true);
-      const token = new URLSearchParams(location.search).get("token");
       try {
-        const response = await apiClient.post(BASE_URL + RESET_PASSWORD_ENDPOINT, {
-          token: token,
-          newPassword: password,
+        await apiClient.post(`${BASE_URL}${CHANGE_PASSWORD_ENDPOINT}?code=${otp}`, {
+          password,
         });
         toast.success("Password reset successful! You can now login.");
         navigate("/signin");
@@ -75,6 +81,16 @@ const ResetPassword = () => {
                   Reset Password
                 </h1>
                 <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-3">
+                    <p className="font-titleFont text-base font-semibold text-gray-600">
+                      Verification code
+                    </p>
+                    <OtpInput value={otp} onChange={setOtp} />
+                    <p className="text-center text-xs font-semibold text-lightText">
+                      Enter the 6-digit OTP sent to {email || "your email"}.
+                    </p>
+                  </div>
+
                   {/* Password */}
                   <div className="flex flex-col gap-.5">
                     <p className="font-titleFont text-base font-semibold text-gray-600">

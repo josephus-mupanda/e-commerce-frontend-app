@@ -19,30 +19,13 @@ const Cart = () => {
   const [shippingCharge, setShippingCharge] = useState("");
 
   const [showPlaceOrderDialog, setShowPlaceOrderDialog] = useState(false);
+  const [checkoutMode, setCheckoutMode] = useState("order");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const [payments, setPayments] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState([]);
   const [errAddress, setAddressError] = useState("");
   const [errCity, setCityError] = useState("");
-  const [errPayment, setPaymentError] = useState("");
 
   const [isLoading, setIsLoading] = useState(false); 
-
-  useEffect(() => {
-    const fetchPayments = async () => {
-      try {
-        const response = await apiClient.get(`${BASE_URL}/api/admin/payments`);
-        setPayments(response.data);
-      } catch (error) {
-        console.error("Error fetching payment methods:", error);
-        toast.error("Failed to fetch payment methods.");
-      }
-    };
-
-    fetchPayments();
-  }, []);
-
 
   useEffect(() => {
     let price = 0;
@@ -67,13 +50,6 @@ const Cart = () => {
 
     let isValid = true;
 
-    if (!paymentMethod.trim()) {
-      setPaymentError("Please enter your payment method.");
-      isValid = false;
-    } else {
-      setPaymentError("");
-    }
-
     if (!address.trim()) {
       setAddressError("Please enter your address.");
       isValid = false;
@@ -91,59 +67,65 @@ const Cart = () => {
     return isValid;
   };
 
+  const getCartItems = () =>
+    products.map((item) => ({
+      productId: item.id || item._id,
+      quantity: Number(item.quantity || 1),
+      price: Number(item.price || 0),
+    }));
+
+  const createOrder = async (status = "PENDING") => {
+    const orderResponse = await apiClient.post(`${BASE_URL}/api/customer/orders`, {
+      address,
+      city,
+      totalAmount: Number(totalAmt) + Number(shippingCharge),
+      status,
+    });
+
+    const orderId = orderResponse.data?.id;
+    if (!orderId) {
+      throw new Error("Order response is missing an id.");
+    }
+
+    await Promise.all(
+      getCartItems().map((item) =>
+        apiClient.post(`${BASE_URL}/api/customer/order-items/add/${orderId}`, item)
+      )
+    );
+
+    return orderResponse.data;
+  };
+
+  const getCheckoutIdempotencyKey = () => {
+    const fingerprint = JSON.stringify({
+      address,
+      city,
+      total: Number(totalAmt) + Number(shippingCharge),
+      items: getCartItems().map(({ productId, quantity }) => ({ productId, quantity })),
+    });
+    const stored = JSON.parse(sessionStorage.getItem("stripeCheckoutIntent") || "{}");
+
+    if (stored.fingerprint === fingerprint && stored.key) {
+      return stored.key;
+    }
+
+    const key =
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    sessionStorage.setItem("stripeCheckoutIntent", JSON.stringify({ fingerprint, key }));
+    return key;
+  };
+
   const handlePlaceOrder = async () => {
 
     if (validateFields()) {
       setIsLoading(true);
       try {
-
-        const formData = {
-
-          trackingId: crypto.randomUUID(),
-          user: {
-            id: sessionStorage.getItem('sessionId')
-          }, 
-          address: address,
-          city: city,
-          orderDate : new Date().toISOString() ,
-          paymentMethod: {
-            id: paymentMethod 
-          },
-          totalAmount: totalAmt + shippingCharge,
-          status: 'PENDING'
-        };
-
-        const orderResponse = await apiClient.post(`${BASE_URL}/api/customer/orders/create`, formData);
-
-        const orderId = orderResponse.data.id;
-
-        // Now, associate order items with the created order
-        for (const item of products) {
-
-            const orderItemData = {
-                order: {
-                  id: orderId 
-                },
-                product: { 
-                  id: item.id 
-                },
-                quantity: item.quantity,
-                price: item.price
-            };
-
-            // Post order item data
-            await apiClient.post(`${BASE_URL}/api/customer/order-items/add`, orderItemData);
-        }
-
-        console.log("Order placed successfully:", orderResponse.data);
-        // Reset the cart after placing the order
+        await createOrder("PENDING");
+        toast.success("Order placed successfully.");
         dispatch(resetCart());
-
-        // Close the place order dialog
         setShowPlaceOrderDialog(false);
-        // Optionally, navigate to the order route
-        // navigate("/order");
-
       }
       catch(error){
         console.error("Error placing order:", error);
@@ -156,10 +138,47 @@ const Cart = () => {
 
   
   const handlePayNow = () => {
-    toast.info("This feature will be available very soon...", {
-      position: "top-center",
-      autoClose: 3000, // 3 seconds
-    });
+    setCheckoutMode("stripe");
+    setShowPlaceOrderDialog(true);
+  };
+
+  const handleStripeCheckout = async () => {
+    if (validateFields()) {
+      setIsLoading(true);
+      try {
+        const idempotencyKey = getCheckoutIdempotencyKey();
+        const response = await apiClient.post(
+          `${BASE_URL}/api/customer/payments/stripe/checkout-session`,
+          {
+            address,
+            city,
+            currency: import.meta.env.VITE_STRIPE_CURRENCY || "rwf",
+            idempotencyKey,
+            items: getCartItems().map(({ productId, quantity }) => ({
+              productId,
+              quantity,
+            })),
+          },
+          {
+            headers: {
+              "Idempotency-Key": idempotencyKey,
+            },
+          }
+        );
+
+        const checkoutUrl = response.data?.checkoutUrl || response.data?.url;
+        if (!checkoutUrl) {
+          throw new Error("Stripe checkout URL is missing.");
+        }
+
+        window.location.assign(checkoutUrl);
+      } catch (error) {
+        console.error("Error starting Stripe checkout:", error);
+        toast.error("Failed to start secure payment.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -214,7 +233,10 @@ const Cart = () => {
               {/* Place order button */}
               <div className="flex justify-center">
                 <button
-                  onClick={() => setShowPlaceOrderDialog(true)}
+                  onClick={() => {
+                    setCheckoutMode("order");
+                    setShowPlaceOrderDialog(true);
+                  }}
                   className="bg-[#FF8533] hover:bg-[#FF6A00] text-white  hover:text-white rounded-md cursor-pointer mr-2 px-8 py-2 font-titleFont font-semibold text-lg  duration-300"
                 >
                   Place Order
@@ -237,7 +259,9 @@ const Cart = () => {
               {showPlaceOrderDialog && (
                 <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
                   <div className="jshop-form-card p-6">
-                    <p className="text-lg font-semibold mb-4">Place Order</p>
+                    <p className="text-lg font-semibold mb-4">
+                      {checkoutMode === "stripe" ? "Secure checkout" : "Place Order"}
+                    </p>
                     <div className="flex flex-col gap-3">
                       <div className="flex flex-col gap-.5">
                         <input
@@ -271,35 +295,19 @@ const Cart = () => {
                         </p>
                         )}
                       </div>
-                      <div className="flex flex-col gap-.5">
-                        <select
-                          value={paymentMethod}
-                          onChange={(e) => setPaymentMethod(e.target.value)}
-                          className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                        >
-                          {/* Map over paymentMethods array to render options */}
-                          <option value="">Select payment method</option>
-                          {payments.map((method) => (
-                            <option key={method.id} value={method.id}>
-                              {method.paymentMethod}
-                            </option>
-                          ))}
-
-                        </select>
-                        {errPayment && (
-                          <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
-                            <span className="font-bold italic mr-1">!</span>
-                            {errPayment}
-                          </p>
-                        )}
-                      </div>
+                      {checkoutMode === "stripe" && (
+                        <p className="jshop-info-panel p-3 text-sm font-semibold text-primeColor">
+                          Payment will continue in Stripe Checkout with duplicate-charge protection.
+                        </p>
+                      )}
                     </div>
                     <div className="flex justify-end mt-4">
                       <button
-                        onClick={handlePlaceOrder}
+                        onClick={checkoutMode === "stripe" ? handleStripeCheckout : handlePlaceOrder}
+                        disabled={isLoading}
                         className="bg-[#FF8533] hover:bg-[#FF6A00] text-white  hover:text-white px-4 py-2 rounded-md mr-2"
                       >
-                        Order
+                        {checkoutMode === "stripe" ? "Pay with Stripe" : "Order"}
                       </button>
                       <button
                         onClick={() => setShowPlaceOrderDialog(false)}

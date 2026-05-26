@@ -53,24 +53,37 @@ const SignIn = () => {
       try {
         
         const response = await apiClient.post(BASE_URL+LOGIN_ENDPOINT, {
-          email: email,
+          username: email,
           password: password,
         });
-        console.log(response.data);
+        const authPayload = response.data || {};
+        const userRole = authPayload.userRole || authPayload.role || CUSTOMER_ROLE;
+        const userId = authPayload.sessionId || authPayload.userId || authPayload.id;
+        const username = authPayload.username || email;
+        const accessToken = authPayload.accessToken || authPayload.token;
+
+        if (!userId || !accessToken) {
+          toast.error("Login response is incomplete. Please try again.");
+          return;
+        }
+
         // Store user information in session storage
-        sessionStorage.setItem("sessionId", response.data.sessionId);
-        sessionStorage.setItem("userRole", response.data.userRole);
-        sessionStorage.setItem("username", response.data.username);
+        sessionStorage.setItem("sessionId", userId);
+        sessionStorage.setItem("userRole", userRole);
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("accessToken", accessToken);
         dispatch(
           setCredentials({
-            sessionId: response.data.sessionId,
-            role: response.data.userRole,
-            username: response.data.username,
+            sessionId: userId,
+            role: userRole,
+            username,
+            accessToken,
           })
         );
 
         // Determine redirect URL based on user role
-        const redirectUrl = getRedirectUrl(response.data.userRole);
+        const redirectUrl = getRedirectUrl(userRole);
         
         // Redirect user to the appropriate page
         navigate(redirectUrl);

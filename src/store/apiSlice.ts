@@ -12,12 +12,14 @@ export interface ApiRequest {
   url: string;
   method?: ApiMethod;
   body?: unknown;
+  headers?: Record<string, string>;
   params?: Record<string, string | number | boolean | undefined | null>;
 }
 
 export interface ApiResponse<T = unknown> {
   data: T;
   status: number;
+  message?: string;
 }
 
 const tagTypes = [
@@ -81,6 +83,7 @@ export const apiSlice = createApi({
           url: withParams(normaliseUrl(request.url), request.params),
           method: request.method ?? "GET",
           body: request.body,
+          headers: request.headers,
         };
 
         const result = await baseQuery(args);
@@ -89,10 +92,21 @@ export const apiSlice = createApi({
         }
 
         const meta = result.meta as FetchBaseQueryMeta | undefined;
+        const responseData = result.data as
+          | { payload?: unknown; message?: string }
+          | undefined;
+        const hasPayload =
+          responseData &&
+          typeof responseData === "object" &&
+          "payload" in responseData &&
+          responseData.payload !== undefined &&
+          responseData.payload !== null;
+
         return {
           data: {
-            data: result.data,
+            data: hasPayload ? responseData.payload : result.data,
             status: meta?.response?.status ?? 200,
+            message: responseData?.message,
           },
         };
       },

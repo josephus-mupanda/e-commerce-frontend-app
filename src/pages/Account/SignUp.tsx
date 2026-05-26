@@ -99,14 +99,16 @@ const SignUp = () => {
             email: email,
             password: password,
           });
-          console.log(response.data);
-          toast.success("Registration successful! Please check your email to confirm.");
+          toast.success("Registration successful! Enter the 6-digit OTP sent to your email.");
           setUserName("");
+          const registeredEmail = email;
           setEmail("");
           setPassword("");
           setConfirmPassword("");
 
-          navigate("/signin");
+          navigate(`/verify-email?email=${encodeURIComponent(registeredEmail)}`, {
+            state: { email: registeredEmail },
+          });
 
         } catch (error) {
             if (error.response && error.response.status === 406) {

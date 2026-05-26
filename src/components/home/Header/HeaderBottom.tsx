@@ -96,10 +96,7 @@ const HeaderBottom = () => {
   const confirmLogout = async () => {
     setIsLoadingLogout(true);
     try {
-      const response = await apiClient.post(`${BASE_URL}/api/users/logout`, {
-        id: sessionStorage.getItem('sessionId'),
-        role: sessionStorage.getItem('userRole')
-      });
+      const response = await apiClient.post(`${BASE_URL}/api/auth/logout`);
       // Check if the logout was successful
       if (response.status === 200) {
         dispatch(clearAuth());
@@ -248,9 +245,9 @@ const HeaderBottom = () => {
             { isLoggedIn ? (
               <div  ref={refUser}  onClick={() => setShowUser(!showUser)} className="flex items-center">
                 <div className="w-8 h-8 rounded-full bg-[#FF8533] hover:bg-[#FF6A00] text-white  hover:text-white flex items-center justify-center mr-2">
-                  <p className=" text-sm text-white font-semibold">{sessionStorage.getItem("username")[0].toUpperCase()}</p>
+                  <p className=" text-sm text-white font-semibold">{(sessionStorage.getItem("username") || "U")[0].toUpperCase()}</p>
                 </div>
-                <p className="text-sm font-semibold">{sessionStorage.getItem("username")}</p>
+                <p className="text-sm font-semibold">{sessionStorage.getItem("username") || "User"}</p>
                 <FaCaretDown />
               </div>
             ) : (

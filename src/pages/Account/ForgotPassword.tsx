@@ -7,7 +7,7 @@ import { BASE_URL } from "../../constants/config";
 import LoadingSpinner from "../../components/Loading/LoadingSpinner";
 import Header from "../../components/home/Header/Header";
 
-const FORGOT_PASSWORD_ENDPOINT = "/api/auth/forgot-password";
+const RESET_PASSWORD_REQUEST_ENDPOINT = "/api/auth/reset-password";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -27,11 +27,13 @@ const ForgotPassword = () => {
     } else {
       setIsLoading(true);
       try {
-        const response = await apiClient.post(BASE_URL + FORGOT_PASSWORD_ENDPOINT, {
+        await apiClient.post(BASE_URL + RESET_PASSWORD_REQUEST_ENDPOINT, {
           email: email,
         });
-        toast.success("Password reset link sent! Please check your email.");
-        navigate("/signin");
+        toast.success("Password reset OTP sent! Please check your email.");
+        navigate(`/reset-password?email=${encodeURIComponent(email)}`, {
+          state: { email },
+        });
       } catch (error) {
         if (error.response && error.response.status === 404) {
           toast.error("Email not found. Please try again.");
@@ -82,7 +84,7 @@ const ForgotPassword = () => {
                     onClick={handleForgotPassword}
                     className="bg-[#FF8533] hover:bg-[#FF6A00] text-white  hover:text-white cursor-pointer w-full text-base font-medium h-10 rounded-md  duration-300"
                   >
-                    Send Reset Link
+                    Send OTP
                   </button>
                   <p className="text-sm text-center font-titleFont font-medium">
                     Remembered your password?{" "}

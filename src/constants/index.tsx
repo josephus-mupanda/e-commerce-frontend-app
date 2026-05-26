@@ -25,7 +25,7 @@ export const navBarList = [
   {
     _id: 1005,
     title: "Contact",
-    link: "contact",
+    link: "/contact",
   },
  
 ];

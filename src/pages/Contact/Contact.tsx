@@ -10,8 +10,8 @@ const Contact = () => {
   const location = useLocation();
   const [prevLocation, setPrevLocation] = useState("");
   useEffect(() => {
-    setPrevLocation(location.state.data);
-  }, [location]);
+    setPrevLocation(location.state?.data ?? "");
+  }, [location.state]);
 
   const [clientName, setclientName] = useState("");
   const [email, setEmail] = useState("");
@@ -65,7 +65,7 @@ const Contact = () => {
     if (clientName && email && EmailValidation(email) && messages) {
       try {
         // Post data to the backend
-        const response = await apiClient.post(`${BASE_URL}/api/users/contact`, {
+        const response = await apiClient.post(`${BASE_URL}/api/contact`, {
             clientName: clientName,
             email: email ,
             message: messages

@@ -51,7 +51,7 @@ const EditProduct = () => {
         const product = response.data; // Assuming response.data contains product details
 
         // Populate product details
-        setCategory(product.category.id);
+        setCategory(product.categoryId || product.category?.id || "");
         setName(product.name);
         setPrice(product.price);
         setQuantity(product.quantity);
@@ -152,13 +152,7 @@ const EditProduct = () => {
           price: parseFloat(price),
           quantity: parseInt(quantity),
           description: description,
-          category: {
-            id: category,
-            user: {
-              id: sessionStorage.getItem("sessionId"),
-            },
-          },
-          image: image,
+          categoryId: category,
           imageUrl: image,
         };
 

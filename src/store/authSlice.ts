@@ -6,6 +6,7 @@ export interface AuthUser {
   sessionId: string;
   username: string;
   role: UserRole;
+  accessToken?: string;
 }
 
 interface AuthState {
@@ -39,6 +40,10 @@ const authSlice = createSlice({
       sessionStorage.setItem("sessionId", action.payload.sessionId);
       sessionStorage.setItem("userRole", action.payload.role);
       sessionStorage.setItem("username", action.payload.username);
+      if (action.payload.accessToken) {
+        sessionStorage.setItem("accessToken", action.payload.accessToken);
+        localStorage.setItem("accessToken", action.payload.accessToken);
+      }
     },
     clearAuth: (state) => {
       state.user = null;
