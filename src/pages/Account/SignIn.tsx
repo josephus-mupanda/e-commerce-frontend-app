@@ -114,9 +114,9 @@ const getRedirectUrl = (userRole) => {
 };
 
   return (
-    <div>
+    <div className="jshop-auth-page">
       <Header />
-      <div className="w-full h-screen flex items-center justify-center">
+      <div className="jshop-auth-screen w-full min-h-[calc(100vh-5rem)] flex items-center justify-center px-4 py-10">
       <div className="w-full lgl:w-1/2 h-full">
         {successMsg ? (
           <div className="w-full lgl:w-[500px] h-full flex flex-col justify-center">
@@ -136,9 +136,9 @@ const getRedirectUrl = (userRole) => {
           ( isLoading ? ( 
               <LoadingSpinner />
           ) :
-          <form className="w-full lgl:w-[450px] h-screen flex items-center justify-center">
-            <div className="px-6 py-4 w-full h-[90%] flex flex-col justify-center overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
-              <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-4">
+          <form className="jshop-auth-form w-full lgl:w-[450px] flex items-center justify-center">
+            <div className="jshop-auth-card px-6 py-7 w-full flex flex-col justify-center">
+              <h1 className="font-titleFont font-black text-3xl mdl:text-4xl mb-4">
                 Sign in
               </h1>
               <div className="flex flex-col gap-3">

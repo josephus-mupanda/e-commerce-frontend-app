@@ -225,11 +225,11 @@ const Order = () => {
   }
 
   return (
-    <div className="max-w-container mx-auto px-4">
+    <div className="jshop-page max-w-container mx-auto px-4">
       <Breadcrumbs title="Orders" prevLocation={prevLocation} />
       {showCancelDialog&& (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-6 rounded-lg">
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
+          <div className="jshop-form-card p-6">
             <p className="text-lg font-semibold mb-4">
               Are you sure you want to cancel this order?
             </p>
@@ -252,8 +252,8 @@ const Order = () => {
       )}
 
       {showDeleteDialog && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-6 rounded-lg">
+        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
+          <div className="jshop-form-card p-6">
             <p className="text-lg font-semibold mb-4">
               Are you sure you want to delete this order?
             </p>
@@ -275,10 +275,10 @@ const Order = () => {
         </div>
       )}
       {orders.length > 0 ? (
-        <div className="max-w-container mx-auto">
-          <Flex className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full px-4 pb-4 lg:pb-0 h-full lg:h-24">
+        <div className="jshop-data-panel max-w-container mx-auto p-4">
+          <Flex className="jshop-toolbar flex flex-col lg:flex-row items-start lg:items-center justify-between w-full px-4 pb-4 lg:pb-0 h-full lg:h-24">
             
-            <div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor border border-gray-300 text-gray-700 flex items-center gap-2 justify-between px-6 rounded-xl">
+            <div className="glass-control relative w-full lg:w-[600px] h-[50px] text-base text-primeColor text-gray-700 flex items-center gap-2 justify-between px-6 rounded-xl">
               <input
                 className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
                 type="text"
@@ -428,7 +428,7 @@ const Order = () => {
           <div className="md:hidden">
               {/* Cards for tablets and phones */}
               {currentOrders.map((order) => (
-                <div key={order.id} className="my-4 p-4 bg-white rounded-md border border-gray-300">
+                <div key={order.id} className="jshop-mobile-card my-4 p-4">
                   {/* Customized card content */}
                   <p className="text-sm font-medium text-gray-900">Tracking ID: {order.trackingId}</p>
                   <p className="text-sm text-gray-600">Address: {order.address}</p>
@@ -533,7 +533,7 @@ const Order = () => {
                 alt="emptyCart"
               />
             </div>
-            <div className="max-w-[500px] p-4 py-8 bg-white flex gap-4 flex-col items-center rounded-md shadow-lg">
+            <div className="jshop-empty-card max-w-[500px] p-4 py-8 flex gap-4 flex-col items-center">
               <h1 className="font-titleFont text-xl font-bold uppercase">
                 Your Order feels empty.
               </h1>

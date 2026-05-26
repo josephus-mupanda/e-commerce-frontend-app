@@ -47,7 +47,7 @@ const Header = () => {
   // }, []);
 
   return (
-    <div className="w-full h-20 bg-white sticky top-0 z-50 border-b-[1px] border-b-gray-200">
+    <div className="jshop-header w-full h-20 sticky top-0 z-50">
       <nav className="h-full px-4 max-w-container mx-auto relative">
         <Flex className="flex items-center justify-between h-full">
           <Link to="/">
@@ -90,7 +90,7 @@ const Header = () => {
                   transition={{ duration: 0.5 }}
                   className="w-[80%] h-full relative"
                 >
-                  <div className="w-full h-full bg-primeColor p-6">
+                  <div className="jshop-mobile-nav w-full h-full p-6">
                     <Link onClick={() => setSidenav(false)}  to="/">
                     <img
                       className="w-16 mb-6"

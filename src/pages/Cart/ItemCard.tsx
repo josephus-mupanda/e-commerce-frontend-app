@@ -13,7 +13,7 @@ import { getProductImageSrc } from "@/utils/productImage";
 const ItemCard = ({ item }) => {
   const dispatch = useDispatch();
   return (
-    <div className="w-full grid grid-cols-5 mb-4 border py-2">
+    <div className="jshop-line-item w-full grid grid-cols-5 mb-4 py-3">
       <div className="flex col-span-5 mdl:col-span-2 items-center gap-4 ml-4">
         <RiDeleteBin6Line //ImCross
           onClick={() => dispatch(deleteItem(item.id))}

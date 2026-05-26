@@ -70,6 +70,7 @@ const NewArrivals = () => {
           <Product
             id={product.id}
             image={product.image}
+            imageUrl={product.imageUrl}
             name={product.name}
             price={product.price}
             description={product.description}

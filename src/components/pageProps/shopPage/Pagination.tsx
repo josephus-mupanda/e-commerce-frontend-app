@@ -43,6 +43,7 @@ function Items({ currentItems, selectedCategories,viewType,loading }) {
           <Product
             id={product.id}
             image={product.image}
+            imageUrl={product.imageUrl}
             name={product.name}
             price={product.price}
             description={product.description}

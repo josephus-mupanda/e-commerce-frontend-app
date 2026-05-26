@@ -9,12 +9,11 @@ import NewArrivals from "../../components/home/NewArrivals/NewArrivals";
 
 const Home = () => {
   return (
-    <div className="w-full mx-auto">
+    <div className="jshop-page w-full mx-auto">
       <Banner />
-      {/* <BannerBottom /> */}
-      <div className="max-w-container mx-auto px-4">
+      <BannerBottom />
+      <div className="jshop-section max-w-container mx-auto px-4">
         {/* <Sale /> */}
-        <br/><br/><br/>
         <NewArrivals />
         {/* <YearProduct />
         <SpecialOffers /> */}

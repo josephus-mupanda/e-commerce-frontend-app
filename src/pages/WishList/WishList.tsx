@@ -16,11 +16,11 @@ const WishList = () => {
   const wishlist = useSelector((state) => state.orebiReducer.wishlist);
 
   return (
-    <div className="max-w-container mx-auto px-4">
+    <div className="jshop-page max-w-container mx-auto px-4">
       <Breadcrumbs title="Wishlist" />
       {wishlist.length > 0 ? (
-        <div className="pb-20">
-          <div className="w-full h-20 bg-[#F5F7F7] text-primeColor hidden lgl:grid grid-cols-5 place-content-center px-6 text-lg font-titleFont font-semibold">
+        <div className="jshop-data-panel pb-20 p-4">
+          <div className="jshop-table-header w-full h-20 text-primeColor hidden lgl:grid grid-cols-5 place-content-center px-6 text-lg font-titleFont font-semibold">
             <h2 className="col-span-2">Product</h2>
             <h2>Price</h2>
           </div>
@@ -53,7 +53,7 @@ const WishList = () => {
               alt="emptyCart"
             />
           </div>
-          <div className="max-w-[500px] p-4 py-8 bg-white flex gap-4 flex-col items-center rounded-md shadow-lg">
+          <div className="jshop-empty-card max-w-[500px] p-4 py-8 flex gap-4 flex-col items-center">
             <h1 className="font-titleFont text-xl font-bold uppercase">
               Your wishList feels empty.
             </h1>

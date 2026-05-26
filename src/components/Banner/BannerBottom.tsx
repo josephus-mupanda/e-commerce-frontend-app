@@ -5,9 +5,9 @@ import { CgRedo } from "react-icons/cg";
 
 const BannerBottom = () => {
   return (
-    <div className="w-full bg-white border-b-[1px] py-4 border-b-gray-200 px-4">
-      <div className="max-w-container mx-auto h-20 flex flex-col md:flex-row justify-between items-center">
-        <div className="flex items-center gap-2 w-72 shadow-sm hover:shadow-md duration-300">
+    <div className="jshop-service-strip w-full px-4 py-6">
+      <div className="max-w-container mx-auto grid gap-4 md:grid-cols-3">
+        <div className="jshop-service-card flex items-center gap-3">
           <span className="font-bold font-titleFont w-6 text-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -39,9 +39,9 @@ const BannerBottom = () => {
               </g>
             </svg>
           </span>
-          <p className="text-xl text-lightText text-base pl-4">Punctuality and Regularity</p>
+          <p className="text-base font-black text-primeColor">Punctuality and Regularity</p>
         </div>
-        <div className="flex md:w-auto items-center gap-2 w-72 shadow-sm hover:shadow-md duration-300">
+        <div className="jshop-service-card flex items-center gap-3">
           <span className="text-5xl text-center w-10 ml-1 text-orange-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,9 +54,9 @@ const BannerBottom = () => {
               ></path>
             </svg>
           </span>
-          <p className="text-xl text-lightText text-base">Easy delivery worldwide</p>
+          <p className="text-base font-black text-primeColor">Easy delivery worldwide</p>
         </div>
-        <div className="flex md:w-auto items-center gap-2 w-72 shadow-sm hover:shadow-md duration-300">
+        <div className="jshop-service-card flex items-center gap-3">
           <span className="text-2xl  text-center w-10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@ const BannerBottom = () => {
               ></path>
             </svg>
           </span>
-          <p className=" text-xl text-lightText text-base">Customer Interaction</p>
+          <p className="text-base font-black text-primeColor">Customer Interaction</p>
         </div>
       </div>
     </div>

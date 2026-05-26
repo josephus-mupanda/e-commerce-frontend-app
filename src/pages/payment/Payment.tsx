@@ -5,12 +5,12 @@ import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 
 const Payment = () => {
   return (
-    <div className="max-w-container mx-auto px-4">
+    <div className="jshop-page max-w-container mx-auto px-4">
       <Breadcrumbs title="Payment gateway" />
-      <div className="pb-10">
+      <div className="jshop-info-panel mb-16 max-w-xl p-8">
         <p>Payment gateway only applicable for Production build.</p>
         <Link to="/">
-          <button className="w-52 h-10 bg-primeColor text-white text-lg mt-4 hover:bg-black duration-300">
+          <button className="jshop-primary-button w-52 h-10 text-lg mt-4">
             Explore More
           </button>
         </Link>

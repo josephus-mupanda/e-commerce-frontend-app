@@ -10,12 +10,12 @@ const Offer = () => {
 
   return (
 
-    <div className="max-w-container mx-auto px-4">
+    <div className="jshop-page max-w-container mx-auto px-4">
       <Breadcrumbs title={category} prevLocation={prevLocation} />
       {/* ================= Products Start here =================== */}
       <div className="w-full h-full flex pb-20 gap-10">
       
-        <div className="w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-10">
+        <div className="jshop-product-panel w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-10">
           <SpecialOffers />
         </div>
       </div>

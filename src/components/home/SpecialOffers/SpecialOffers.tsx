@@ -39,6 +39,7 @@ const SpecialOffers = () => {
             key={data.id}
             id={data.id}
             image={data.image}
+            imageUrl={data.imageUrl}
             name={data.name}
             price={data.price}
             description={data.description}

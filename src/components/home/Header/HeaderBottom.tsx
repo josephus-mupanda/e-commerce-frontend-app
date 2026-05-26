@@ -118,7 +118,7 @@ const HeaderBottom = () => {
 
   return (
 
-    <div className="w-full bg-[#F5F5F3] relative">
+    <div className="jshop-subheader w-full relative">
       <div className="max-w-container mx-auto">
         <Flex className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full px-4 pb-4 lg:pb-0 h-full lg:h-24">
           <div
@@ -133,7 +133,7 @@ const HeaderBottom = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="absolute top-36  z-50 bg-primeColor w-auto text-[#767676] h-auto p-4 pb-6"
+                className="jshop-popover absolute top-36 z-50 w-auto h-auto p-4 pb-6"
               >
                 {categories.map((category) => (
                   <Link key={category.id} to={`/category/${category.name}`}>
@@ -145,7 +145,7 @@ const HeaderBottom = () => {
               </motion.ul>
             )}
           </div>
-          <div className="relative w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl">
+          <div className="glass-control relative w-full lg:w-[600px] h-[50px] text-base text-primeColor flex items-center gap-2 justify-between px-6 rounded-xl">
             <input
               className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
               type="text"
@@ -261,7 +261,7 @@ const HeaderBottom = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="absolute top-6 left-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
+                className="jshop-popover absolute top-6 left-0 z-50 w-44 h-auto p-4 pb-6"
               >
                 {/* Check if the user is logged in */}
                 {isLoggedIn ? (

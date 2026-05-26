@@ -163,11 +163,11 @@ const Cart = () => {
   };
 
   return (
-    <div className="max-w-container mx-auto px-4">
+    <div className="jshop-page max-w-container mx-auto px-4">
       <Breadcrumbs title="Cart" />
       {products.length > 0 ? (
-        <div className="pb-20">
-          <div className="w-full h-20 bg-[#F5F7F7] text-primeColor hidden lgl:grid grid-cols-5 place-content-center px-6 text-lg font-titleFont font-semibold">
+        <div className="jshop-data-panel pb-20 p-4">
+          <div className="jshop-table-header w-full h-20 text-primeColor hidden lgl:grid grid-cols-5 place-content-center px-6 text-lg font-titleFont font-semibold">
             <h2 className="col-span-2">Product</h2>
             <h2>Price</h2>
             <h2>Quantity</h2>
@@ -188,7 +188,7 @@ const Cart = () => {
             Reset cart
           </button>
           <div className="max-w-7xl gap-4 flex justify-center mt-4">
-            <div className="w-96 flex flex-col gap-4">
+            <div className="jshop-summary-card w-96 flex flex-col gap-4 p-5">
               <h1 className="text-2xl font-semibold text-left">Cart totals</h1>
               <div>
                 <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
@@ -235,8 +235,8 @@ const Cart = () => {
               )}
               {/* Place order dialog */}
               {showPlaceOrderDialog && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                  <div className="bg-white p-6 rounded-lg">
+                <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
+                  <div className="jshop-form-card p-6">
                     <p className="text-lg font-semibold mb-4">Place Order</p>
                     <div className="flex flex-col gap-3">
                       <div className="flex flex-col gap-.5">
@@ -329,7 +329,7 @@ const Cart = () => {
               alt="emptyCart"
             />
           </div>
-          <div className="max-w-[500px] p-4 py-8 bg-white flex gap-4 flex-col items-center rounded-md shadow-lg">
+          <div className="jshop-empty-card max-w-[500px] p-4 py-8 flex gap-4 flex-col items-center">
             <h1 className="font-titleFont text-xl font-bold uppercase">
             Your Cart feels empty.
             </h1>

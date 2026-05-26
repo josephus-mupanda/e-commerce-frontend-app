@@ -11,24 +11,27 @@ import {
 import Image from "../designLayouts/Image";
 
 const CustomSlide = ({ Subtext, imgSrc, text, buttonLink, buttonText }) => (
-  <div className="relative flex flex-col md:flex-row bg-[#F5F5F3] items-center justify-center p-4 md:p-0">
-    <div className="max-w-[450px] mb-6 md:mb-0 md:mr-10 md:ml-10 text-center md:text-left">
-      <h1 className="mb-4 text-2xl md:text-4xl font-bold text-black">
-        {text}
-      </h1>
-      <p className="mb-6 text-lg md:text-2xl text-gray-600">
-        {Subtext}
-      </p>
-      <Link to={buttonLink}>
-        <button className="bg-[#FF8533] hover:bg-[#FF6A00] text-white rounded-md text-base md:text-lg font-bold w-[150px] md:w-[185px] h-[40px] md:h-[50px] duration-300">
-          {buttonText}
-        </button>
-      </Link>
-    </div>
-    <div className="w-full md:w-auto flex justify-center md:justify-start">
-      {/* <Image imgSrc={imgSrc} className="max-w-full h-auto" /> */}
-      <div className="w-[300px] h-[300px] md:w-[450px] md:h-[450px] overflow-hidden">
-        <Image imgSrc={imgSrc} className="w-full h-full object-cover" />
+  <div className="jshop-hero-slide relative min-h-[540px] overflow-hidden">
+    <Image imgSrc={imgSrc} className="absolute inset-0 h-full w-full object-cover" />
+    <div className="jshop-hero-scrim absolute inset-0" />
+    <div className="relative z-10 mx-auto flex min-h-[540px] max-w-container items-center px-6 py-16">
+      <div className="max-w-3xl text-white">
+        <span className="jshop-hud-label">J-Shop live kitchen</span>
+        <h1 className="mt-5 max-w-3xl text-4xl font-black leading-tight md:text-6xl">
+          {text}
+        </h1>
+        <p className="mt-5 max-w-2xl text-base font-medium leading-8 text-white/86 md:text-xl">
+          {Subtext}
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <Link to={buttonLink}>
+            <button className="jshop-primary-button px-7 py-3 text-base font-black">
+              {buttonText}
+            </button>
+          </Link>
+          <span className="jshop-hero-chip">Fresh stock</span>
+          <span className="jshop-hero-chip">Fast checkout</span>
+        </div>
       </div>
     </div>
   </div>
@@ -141,7 +144,7 @@ const Banner = () => {
   ];
   
   return (
-    <div className="w-full bg-white">
+    <div className="jshop-hero w-full">
       <Slider {...settings}>
         {slides.map((slide, index) => (
           <CustomSlide key={index} {...slide} />

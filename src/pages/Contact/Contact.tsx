@@ -90,17 +90,17 @@ const Contact = () => {
   };
 
   return (
-    <div className="max-w-container mx-auto px-4">
+    <div className="jshop-page max-w-container mx-auto px-4">
       <Breadcrumbs title="Fill up the Form" prevLocation={prevLocation} />
       {successMsg ? (
-        <p className="pb-20 w-96 font-medium text-green-500">{successMsg}</p>
+        <p className="jshop-info-panel mb-20 max-w-xl p-6 font-medium text-green-600">{successMsg}</p>
       ) : (
         <div className="w-full lgl:w-1/2 mx-auto">
           {loading ? (
             <LoadingSpinner /> 
           ) : (
           <form className="w-full flex items-center justify-center">
-            <div className="w-[500px] h-auto py-6 flex flex-col gap-6">
+            <div className="jshop-form-card w-full max-w-[540px] h-auto p-7 flex flex-col gap-6">
               <div>
                 <p className="text-base font-titleFont font-semibold px-2">
                   Name
@@ -159,7 +159,7 @@ const Contact = () => {
               </div>
               <button
                 onClick={handlePost}
-                className="bg-[#FF8533] hover:bg-[#FF6A00] text-white  hover:text-white rounded-md cursor-pointer active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg duration-300"
+                className="jshop-primary-button px-8 py-3 font-titleFont font-black text-lg"
               >
                 Send
               </button>

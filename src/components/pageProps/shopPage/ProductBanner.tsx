@@ -28,7 +28,7 @@ const ProductBanner = ({ itemsPerPageFromBanner,viewTypeFromBanner }) => {
   }, [girdViewActive, listViewActive,viewTypeFromBanner]);
 
   return (
-    <div className="w-full flex flex-col md:flex-row md:items-center justify-between">
+    <div className="jshop-toolbar w-full flex flex-col md:flex-row md:items-center justify-between">
       {/* =========================================================
                             Left Part Start here
         ======================================================== */}
@@ -39,7 +39,7 @@ const ProductBanner = ({ itemsPerPageFromBanner,viewTypeFromBanner }) => {
             girdViewActive
               ? "bg-[#FF8533] hover:bg-[#FF6A00] text-white  hover:text-white"
               : "border-[1px] border-gray-300 text-[#737373]"
-          } w-8 h-8 text-lg flex items-center justify-center cursor-pointer gridView`}
+          } w-9 h-9 text-lg flex items-center justify-center cursor-pointer gridView rounded-lg`}
         >
           <BsGridFill />
         </span>
@@ -48,7 +48,7 @@ const ProductBanner = ({ itemsPerPageFromBanner,viewTypeFromBanner }) => {
             listViewActive
               ? "bg-[#FF8533] hover:bg-[#FF6A00] text-white  hover:text-white"
               : "border-[1px] border-gray-300 text-[#737373]"
-          } w-8 h-8 text-base flex items-center justify-center cursor-pointer listView`}
+          } w-9 h-9 text-base flex items-center justify-center cursor-pointer listView rounded-lg`}
         >
           <ImList />
         </span>

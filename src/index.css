@@ -66,7 +66,7 @@
   --surface-strong: rgba(255, 255, 255, 0.9);
   --line: rgba(38, 38, 38, 0.1);
   --shadow: 0 24px 70px -34px rgba(38, 38, 38, 0.45);
-  --radius-card: 1rem;
+  --radius-card: 8px;
 }
 
 @layer base {
@@ -155,6 +155,351 @@
     background: rgba(255, 255, 255, 0.72);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
+  }
+
+  .jshop-page {
+    position: relative;
+    isolation: isolate;
+    padding-bottom: 2rem;
+  }
+
+  .jshop-page::before,
+  .jshop-auth-screen::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(180deg, transparent, #000 12%, #000 80%, transparent);
+  }
+
+  .jshop-header,
+  .jshop-subheader {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.68);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 18px 50px -38px rgba(38, 38, 38, 0.55);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+  }
+
+  .jshop-subheader {
+    border-top: 1px solid rgba(255, 255, 255, 0.58);
+  }
+
+  .jshop-mobile-nav,
+  .jshop-popover {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(38, 38, 38, 0.88);
+    box-shadow: 0 28px 80px -36px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .jshop-popover li {
+    color: rgba(255, 255, 255, 0.76) !important;
+  }
+
+  .jshop-popover li:hover {
+    color: #ffffff !important;
+  }
+
+  .jshop-hero {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+  }
+
+  .jshop-hero .slick-slider,
+  .jshop-hero .slick-list,
+  .jshop-hero .slick-track {
+    min-height: 540px;
+  }
+
+  .jshop-hero-slide {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  }
+
+  .jshop-hero-scrim {
+    background:
+      linear-gradient(90deg, rgba(20, 18, 16, 0.76) 0%, rgba(20, 18, 16, 0.52) 48%, rgba(20, 18, 16, 0.16) 100%),
+      linear-gradient(180deg, rgba(255, 133, 51, 0.2) 0%, rgba(0, 166, 166, 0.18) 100%);
+  }
+
+  .jshop-hud-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.58);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    background: rgba(255, 255, 255, 0.18);
+    color: inherit;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .jshop-hero-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 999px;
+    padding: 0 1rem;
+    background: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    font-weight: 800;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .jshop-primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--brand-orange), var(--brand-ember));
+    color: #ffffff;
+    box-shadow: 0 18px 34px -22px rgba(255, 106, 0, 0.9);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  }
+
+  .jshop-primary-button:hover {
+    filter: saturate(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 22px 42px -24px rgba(255, 106, 0, 0.95);
+  }
+
+  .jshop-page button,
+  .jshop-auth-page button {
+    border-radius: 8px;
+  }
+
+  .jshop-page button:not(.jshop-primary-button):not(:disabled):hover,
+  .jshop-auth-page button:not(.jshop-primary-button):not(:disabled):hover {
+    filter: saturate(1.05);
+  }
+
+  .jshop-service-strip {
+    background: rgba(255, 255, 255, 0.34);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .jshop-service-card,
+  .jshop-info-panel,
+  .jshop-form-card,
+  .jshop-summary-card,
+  .jshop-empty-card,
+  .jshop-data-panel,
+  .jshop-filter-panel,
+  .jshop-product-panel,
+  .jshop-product-detail {
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: var(--radius-card);
+    background: rgba(255, 255, 255, 0.68);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+  }
+
+  .jshop-service-card {
+    min-height: 5.5rem;
+    padding: 1rem;
+  }
+
+  .jshop-filter-panel,
+  .jshop-product-panel {
+    padding: 1rem;
+  }
+
+  .jshop-filter-panel li {
+    border-color: rgba(38, 38, 38, 0.08) !important;
+    border-radius: 8px;
+    padding: 0.6rem 0.5rem;
+    background: rgba(255, 255, 255, 0.36);
+  }
+
+  .jshop-filter-panel input[type="checkbox"] {
+    min-height: auto;
+    accent-color: var(--brand-orange);
+  }
+
+  .jshop-section {
+    padding-top: 4rem;
+  }
+
+  .jshop-section-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .jshop-section-heading h2 {
+    margin-top: 0.65rem;
+    color: var(--brand-ink);
+    font-family: "Poppins", sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+
+  .jshop-breadcrumb {
+    margin-bottom: 1rem;
+  }
+
+  .jshop-breadcrumb h1 {
+    display: inline-flex;
+    width: fit-content;
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    border-radius: 8px;
+    padding: 0.35rem 0.8rem;
+    background: rgba(255, 255, 255, 0.56);
+    box-shadow: 0 18px 44px -34px rgba(38, 38, 38, 0.48);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .jshop-toolbar,
+  .jshop-table-header {
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .jshop-product-card {
+    max-width: 20rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.64);
+    box-shadow: 0 24px 70px -42px rgba(38, 38, 38, 0.56);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+
+  .jshop-product-card:hover {
+    border-color: rgba(255, 133, 51, 0.42);
+    transform: translateY(-3px);
+    box-shadow: 0 30px 90px -48px rgba(255, 106, 0, 0.5);
+  }
+
+  .jshop-product-media {
+    background:
+      linear-gradient(135deg, rgba(255, 133, 51, 0.14), rgba(0, 166, 166, 0.12)),
+      rgba(255, 255, 255, 0.36);
+  }
+
+  .jshop-product-media img {
+    object-fit: cover;
+    transition: transform 260ms ease;
+  }
+
+  .jshop-product-card:hover .jshop-product-media img {
+    transform: scale(1.04);
+  }
+
+  .jshop-product-actions {
+    border-top: 1px solid rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .jshop-product-meta {
+    border-top: 1px solid rgba(255, 255, 255, 0.64);
+    background: rgba(255, 255, 255, 0.58);
+  }
+
+  .jshop-line-item,
+  .jshop-mobile-card {
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: 0 18px 48px -36px rgba(38, 38, 38, 0.52);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .jshop-auth-screen {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .jshop-auth-card {
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.58)),
+      rgba(255, 255, 255, 0.74);
+    box-shadow: 0 28px 84px -46px rgba(38, 38, 38, 0.62);
+    backdrop-filter: blur(26px);
+    -webkit-backdrop-filter: blur(26px);
+  }
+
+  .jshop-auth-card h1,
+  .jshop-form-card h1 {
+    color: var(--brand-ink);
+  }
+
+  .jshop-auth-card h1::after,
+  .jshop-form-card > p:first-child::after {
+    content: "";
+    display: block;
+    width: 3.5rem;
+    height: 3px;
+    margin-top: 0.7rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--brand-orange), var(--brand-teal));
+  }
+
+  .jshop-auth-card input,
+  .jshop-auth-card select,
+  .jshop-auth-card textarea,
+  .jshop-form-card input,
+  .jshop-form-card select,
+  .jshop-form-card textarea,
+  .jshop-page input,
+  .jshop-page select,
+  .jshop-page textarea {
+    min-height: 2.7rem;
+    border: 1px solid rgba(38, 38, 38, 0.1) !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.74) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .jshop-auth-card button,
+  .jshop-form-card button {
+    min-height: 2.7rem;
+  }
+
+  .jshop-page table {
+    overflow: hidden;
+  }
+
+  .jshop-page thead th {
+    background: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .jshop-page tbody tr {
+    background: rgba(255, 255, 255, 0.62);
   }
 
   .shop-card,
