@@ -1,60 +1,92 @@
-# E-Commerce Full Stack Application
+# E-Commerce Frontend (React + Vite + TypeScript)
 
-[![Frontend](https://img.shields.io/badge/Frontend-ReactJS-blue)](https://github.com/josephus-mupanda/e-commerce-frontend-app)
-[![Backend](https://img.shields.io/badge/Backend-Spring%20Boot-green)](https://github.com/josephus-mupanda/e-commerce-backend-app)
-[![Deployed Frontend](https://img.shields.io/badge/Frontend%20Demo-Vercel-orange)](https://e-commerce-frontend-react-js-pearl.vercel.app/)
-[![Deployed Backend](https://img.shields.io/badge/Backend%20Demo-Render-orange)](https://e-commerce-backend-spring-boot.onrender.com)
+Frontend web application for the e-commerce platform.
 
----
+This app provides:
 
-## Overview
+- customer storefront and checkout,
+- account/auth screens,
+- admin dashboards (users, orders, products, payments),
+- delivery management and reporting screens.
 
-This project is a full stack **e-commerce application** demonstrating the following technology stack:
+## Stack
 
-- **Frontend:** ReactJS  
-- **Backend:** Java Spring Boot  
-- **Database:** PostgreSQL
-- **Docker:** All applications are dockerized for easy deployment
+- React 18
+- Vite
+- TypeScript
+- Redux Toolkit + RTK Query
+- React Router
+- Tailwind CSS
 
-The project is designed for a real-world e-commerce scenario including user authentication, product management, and order processing.
+## Repository Layout
 
----
+Main source folders:
 
-## Demo
+- `src/pages` - route-level pages (Customer + Admin)
+- `src/components` - reusable UI components
+- `src/store` - Redux slices and RTK Query APIs
+- `src/utils` - API helpers and response helpers
+- `src/constants` - app constants and config
 
-- **Frontend Demo:** [Click Here](https://e-commerce-frontend-react-js-pearl.vercel.app/)  
-- **Backend Demo:** [Click Here](https://e-commerce-backend-spring-boot.onrender.com)
+## Environment Variables
 
----
+Copy and edit:
 
-## Admin Credentials for Testing
+```bash
+cp .env.example .env
+```
 
-You can use the following admin account to explore all features:
+Key variables:
 
-- **Email:** `admin@example.com`  
-- **Password:** `admin123`
+- `VITE_API_BASE_URL` (backend base URL, e.g. `http://localhost:8080`)
+- `VITE_STRIPE_PUBLISHABLE_KEY`
+- `VITE_STRIPE_CURRENCY`
+- `VITE_CLOUDINARY_*` (if media upload is used)
 
----
+## Quick Start
 
-## GitHub Repositories
+### 1) Install
 
-- **Frontend (ReactJS):** [GitHub Link](https://github.com/josephus-mupanda/e-commerce-frontend-app)  
-- **Backend (Java Spring Boot):** [GitHub Link](https://github.com/josephus-mupanda/e-commerce-backend-app)
+```bash
+npm install
+```
 
----
+### 2) Run Dev Server
 
-## Features
+```bash
+npm run dev
+```
 
-- User authentication & role-based access  
-- Product catalog with CRUD operations  
-- Shopping cart and order management  
-- Dockerized for easy setup and deployment
+Default URL: `http://localhost:5173`
 
----
+### 3) Build
 
-## How to Run Locally
+```bash
+npm run build
+```
 
-1. **Clone the repositories**
-   ```bash
-   git clone https://github.com/josephus-mupanda/e-commerce-frontend-app.git
-   git clone https://github.com/josephus-mupanda/e-commerce-backend-app.git
+## Scripts
+
+- `npm run dev` - start local development server
+- `npm run build` - type-check + production build
+- `npm run preview` - preview built output
+- `npm run lint` - run ESLint
+
+## API Integration Notes
+
+- Frontend consumes both legacy and versioned backend endpoints.
+- RTK Query endpoints are defined in `src/store/shopApi.ts`.
+- Base API URL comes from `VITE_API_BASE_URL` via config utilities.
+- Auth state is stored and restored from browser storage with token checks.
+
+## Handover Notes (For Next Developer)
+
+1. Confirm backend URL in `.env` before debugging API errors.
+2. Prefer RTK Query for new data-fetching paths.
+3. Keep admin and customer flows separated by route and shell.
+4. Align endpoint changes with backend `/api/v1` contracts.
+5. For large new screens, split components early to avoid page bloat.
+
+## Related Repositories
+
+- Backend: [e-commerce-backend-app](https://github.com/josephus-mupanda/e-commerce-backend-app)
