@@ -92,7 +92,9 @@ const SignIn = () => {
         setPassword("");
 
       }  catch (error) {
-        const status = error?.response?.status || error?.status;
+        const status =
+          (error as { status?: number })?.status ??
+          (error as { data?: { status?: number } })?.data?.status;
         if (status) {
           switch (status) {
 

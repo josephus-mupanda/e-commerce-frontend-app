@@ -29,7 +29,7 @@ export const shopApi = apiSlice.injectEndpoints({
       providesTags: ["Payments"],
     }),
     getUsers: builder.query<any[], void>({
-      query: () => "/api/users",
+      query: () => "/api/admin/users",
       transformResponse: (response: unknown) => unwrapApiArray(response),
       providesTags: ["Users"],
     }),

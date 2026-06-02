@@ -22,6 +22,7 @@ const Cart = () => {
   const [checkoutMode, setCheckoutMode] = useState("order");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
+  const [sector, setSector] = useState("");
   const [errAddress, setAddressError] = useState("");
   const [errCity, setCityError] = useState("");
 
@@ -78,7 +79,7 @@ const Cart = () => {
     const orderResponse = await apiClient.post(`${BASE_URL}/api/customer/orders`, {
       address,
       city,
-      totalAmount: Number(totalAmt) + Number(shippingCharge),
+      sector,
       status,
     });
 
@@ -294,6 +295,15 @@ const Cart = () => {
                           {errCity}
                         </p>
                         )}
+                      </div>
+                      <div className="flex flex-col gap-.5">
+                        <input
+                          type="text"
+                          placeholder="sector / quartier"
+                          value={sector}
+                          onChange={(e) => setSector(e.target.value)}
+                          className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                        />
                       </div>
                       {checkoutMode === "stripe" && (
                         <p className="jshop-info-panel p-3 text-sm font-semibold text-primeColor">

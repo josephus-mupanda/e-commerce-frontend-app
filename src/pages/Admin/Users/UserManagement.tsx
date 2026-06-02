@@ -186,9 +186,10 @@ const UserManagement = () => {
     // Fetch user data from the backend API
     const fetchUsers = async () => {
       try {
-        const response = await apiClient.get(`${BASE_URL}/api/users`);
-        setUsers(response.data);
-        setFilteredUsers(response.data);
+        const response = await apiClient.get(`${BASE_URL}/api/admin/users`);
+        const list = Array.isArray(response.data) ? response.data : [];
+        setUsers(list);
+        setFilteredUsers(list);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }

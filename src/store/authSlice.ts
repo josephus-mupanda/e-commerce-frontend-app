@@ -17,17 +17,20 @@ interface AuthState {
 const savedSessionId = sessionStorage.getItem("sessionId");
 const savedRole = sessionStorage.getItem("userRole") as UserRole | null;
 const savedUsername = sessionStorage.getItem("username");
+const savedAccessToken =
+  sessionStorage.getItem("accessToken") || localStorage.getItem("accessToken");
 
 const initialState: AuthState = {
   user:
-    savedSessionId && savedRole
+    savedSessionId && savedRole && savedAccessToken
       ? {
           sessionId: savedSessionId,
           role: savedRole,
           username: savedUsername || "User",
+          accessToken: savedAccessToken,
         }
       : null,
-  isAuthenticated: Boolean(savedSessionId && savedRole),
+  isAuthenticated: Boolean(savedSessionId && savedRole && savedAccessToken),
 };
 
 const authSlice = createSlice({

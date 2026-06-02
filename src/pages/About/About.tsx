@@ -7,8 +7,8 @@ const About = () => {
   const location = useLocation();
   const [prevLocation, setPrevLocation] = useState("");
   useEffect(() => {
-    setPrevLocation(location.state.data);
-  }, [location]);
+    setPrevLocation(location.state?.data ?? "");
+  }, [location.state]);
   return (
     <div className="jshop-page max-w-container mx-auto px-4">
       <Breadcrumbs title="About" prevLocation={prevLocation} />

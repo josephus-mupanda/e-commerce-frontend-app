@@ -25,7 +25,10 @@ const SpecialCase = () => {
   useEffect(() => {
     // Check if the session ID exists in sessionStorage
     const sessionId = sessionStorage.getItem("sessionId");
-    const userLoggedIn = sessionId !== null && sessionId !== "";
+    const accessToken =
+      sessionStorage.getItem("accessToken") || localStorage.getItem("accessToken");
+    const userLoggedIn =
+      sessionId !== null && sessionId !== "" && accessToken !== null && accessToken !== "";
     setIsLoggedIn(userLoggedIn);
   }, []);
 
@@ -45,10 +48,7 @@ const SpecialCase = () => {
 
   const confirmLogout = async () => {
     try {
-      const response = await apiClient.post(`${BASE_URL}/api/users/logout`, {
-        id: sessionStorage.getItem('sessionId'),
-        role: sessionStorage.getItem('userRole')
-      });
+      const response = await apiClient.post(`${BASE_URL}/api/auth/logout`);
       // Check if the logout was successful
       if (response.status === 200) {
         dispatch(clearAuth());

@@ -64,7 +64,7 @@ const Order = () => {
   };
 
   useEffect(() => {
-    setPrevLocation(location.state.data);
+    setPrevLocation(location.state?.data ?? "");
     fetchOrders();
   }, [location]);
 
@@ -82,8 +82,7 @@ const Order = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true); // Set loading state to true
-      const userId = sessionStorage.getItem('sessionId'); // Assuming sessionId is the user ID
-      const response = await apiClient.get(`${BASE_URL}/api/customer/orders/user/${userId}`);
+      const response = await apiClient.get(`${BASE_URL}/api/customer/orders`);
       setOrders(response.data);
       setFilteredorders(response.data);
       setLoading(false); // Set loading state to false after fetching orders
@@ -109,10 +108,8 @@ const Order = () => {
     try {
       // Call API to update order status to "CANCELED"
       let updatedStatus = "CANCELED";
-      const response =  await apiClient.put(`${BASE_URL}/api/customer/orders/update/${id}`,
-        {
-          status: updatedStatus 
-        }
+      const response = await apiClient.patch(
+        `${BASE_URL}/api/customer/orders/${id}/status?status=${encodeURIComponent(updatedStatus)}`
       );
       // Update the local state to reflect the change
       const updatedOrders = orders.map((order) =>
@@ -149,7 +146,7 @@ const Order = () => {
   const onDelete = async (id) => {
 
     try {
-      await apiClient.delete(`${BASE_URL}/api/customer/orders/delete/${id}`);
+      await apiClient.delete(`${BASE_URL}/api/customer/orders/${id}`);
       setOrders(orders.filter((order) => order.id !== id));
       setFilteredorders(filteredorders.filter((order) => order.id !== id));
     } catch (error) {
@@ -182,10 +179,8 @@ const Order = () => {
     try {
       // Call API to update order status to "PENDING"
       let updatedStatus = "PENDING";
-      const response =  await apiClient.put(`${BASE_URL}/api/customer/orders/update/${id}`,
-        {
-          status: updatedStatus 
-        }
+      const response = await apiClient.patch(
+        `${BASE_URL}/api/customer/orders/${id}/status?status=${encodeURIComponent(updatedStatus)}`
       );
       // Update the local state to reflect the change
       const updatedOrders = orders.map((order) =>

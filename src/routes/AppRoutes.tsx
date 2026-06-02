@@ -34,6 +34,8 @@ import CategoryManagement from "@/pages/Admin/Category/CategoryManagement";
 import ProductManagement from "@/pages/Admin/Product/ProductManagement";
 import OrderManagement from "@/pages/Admin/Order/OrderManagement";
 import Analytics from "@/pages/Admin/Analytics/Analytics";
+import DeliveryManagement from "@/pages/Admin/Delivery/DeliveryManagement";
+import Reports from "@/pages/Admin/Reports/Reports";
 import CreateCategory from "@/pages/Admin/Category/CreateCategory";
 import CreateProduct from "@/pages/Admin/Product/CreateProduct";
 import EditCategory from "@/pages/Admin/Category/EditCategory";
@@ -65,7 +67,13 @@ const ProtectedRoute = ({
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const sessionRole = sessionStorage.getItem("userRole") as AppRole | null;
   const role = user?.role || sessionRole || undefined;
-  const hasSession = isAuthenticated || Boolean(sessionStorage.getItem("sessionId"));
+  const accessToken =
+    user?.accessToken ||
+    sessionStorage.getItem("accessToken") ||
+    localStorage.getItem("accessToken");
+  const hasSession =
+    (isAuthenticated || Boolean(sessionStorage.getItem("sessionId"))) &&
+    Boolean(accessToken);
 
   if (!hasSession) {
     return <Navigate to="/signin" replace />;
@@ -173,6 +181,8 @@ const router = createBrowserRouter(
         <Route path="create-payment" element={<CreatePaymentMethod />} />
         <Route path="update-payment/:id" element={<EditPaymentMethod />} />
         <Route path="orders" element={<OrderManagement />} />
+        <Route path="delivery" element={<DeliveryManagement />} />
+        <Route path="reports" element={<Reports />} />
       </Route>
     </Route>
   )

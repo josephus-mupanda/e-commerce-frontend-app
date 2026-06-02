@@ -10,8 +10,10 @@ import {
   ShoppingBag,
   Store,
   Tags,
+  Truck,
   Users,
   X,
+  FileBarChart,
 } from "lucide-react";
 import { toast } from "sonner";
 import { logo } from "@/assets/images";
@@ -28,6 +30,8 @@ const navItems = [
   { title: "Products", link: "/admin/product", icon: Package },
   { title: "Payments", link: "/admin/payment-method", icon: CreditCard },
   { title: "Orders", link: "/admin/orders", icon: ShoppingBag },
+  { title: "Delivery", link: "/admin/delivery", icon: Truck },
+  { title: "Reports", link: "/admin/reports", icon: FileBarChart },
 ];
 
 const AdminShell = () => {
@@ -58,12 +62,8 @@ const AdminShell = () => {
   const confirmLogout = async () => {
     try {
       await apiRequest({
-        url: "/api/users/logout",
+        url: "/api/auth/logout",
         method: "POST",
-        body: {
-          id: sessionStorage.getItem("sessionId"),
-          role: sessionStorage.getItem("userRole"),
-        },
       }).unwrap();
       dispatch(clearAuth());
       toast.success("Logging out...");
